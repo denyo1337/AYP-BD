@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="Functions\Commands\" />
+    <Folder Include="Functions\Queries\" />
   </ItemGroup>
 
 </Project>
