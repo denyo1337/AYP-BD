@@ -1,9 +1,14 @@
-﻿using MediatR;
+﻿using Application.Functions.Commands;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebAPI.Controllers
 {
+    [ApiController]
+    [Route("ayb/api/[controller]")]
+    [AllowAnonymous]
     public class AccountController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -11,11 +16,12 @@ namespace WebAPI.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet]
-        [SwaggerOperation(Summary = "Generate JWT for auth")]
-        public async Task<IActionResult> Get([FromRoute] bool t)
+        [HttpGet("test/{text}")]
+        [SwaggerOperation(Summary = "Test")]
+        public async Task<IActionResult> Get([FromRoute] string text)
         {
-            return Ok();
+            var test = await _mediator.Send(new TestCommand(text));
+            return Ok(test);
         }
     }
 }

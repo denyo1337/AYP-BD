@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-
 namespace Application
 {
     public static class Di
@@ -9,6 +9,7 @@ namespace Application
         {
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             //here register MiddleWare for error handling
             //passwordhashers, contextProvider, mediator, services etc.
             return services;
