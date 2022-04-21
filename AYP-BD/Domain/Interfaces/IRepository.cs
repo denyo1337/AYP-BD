@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Infrastructure.Data
+namespace Domain.Data
 {
     public interface IRepository<T> where T: class, IEntity
     {

@@ -10,10 +10,10 @@ namespace WebAPI.Controllers
     [ApiController]
     [Route("ayb/api/[controller]")]
     [AllowAnonymous]
-    public class AccountController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public AccountController(IMediator mediator)
+        public UsersController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -22,9 +22,7 @@ namespace WebAPI.Controllers
         [SwaggerOperation(Summary = "Register user, no steam profile info needed")]
         public async Task<IActionResult> Post([FromBody] RegisterUserCommand command)
         {
-
-
-            return Ok();
+            return Ok(await _mediator.Send(command));
         }
     }
 }

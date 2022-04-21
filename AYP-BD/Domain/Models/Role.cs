@@ -2,9 +2,9 @@
 
 namespace Domain.Models
 {
-    public class Role : IEntity
+    public class Role 
     {
-        public long Id { get; set; }
+        public byte Id { get; set; }
         public string Name { get; set; }
     }
 }

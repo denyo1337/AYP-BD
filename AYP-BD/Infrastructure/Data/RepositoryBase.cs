@@ -17,7 +17,7 @@ namespace Infrastructure.Data
 
         public RepositoryBase(Context context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)
