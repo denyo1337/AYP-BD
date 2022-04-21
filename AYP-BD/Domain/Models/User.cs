@@ -12,7 +12,7 @@ namespace Domain.Models
         public string Nationality { get; set; }
         public string PasswordHash { get; set; }
         public virtual Role Role { get; set; }
-        public int RoleId { get; set; }
+        public byte RoleId { get; set; }
         public bool? IsBanned { get; set; }
         public bool? IsActive { get; set; }
         public DateTime LastLogOn { get; set; }

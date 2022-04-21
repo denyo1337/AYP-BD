@@ -1,10 +1,8 @@
-﻿using Domain.Common;
+﻿using Application.Common;
+using Domain.Common;
+using Domain.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Infrastructure.Data
 {
@@ -14,10 +12,16 @@ namespace Infrastructure.Data
     {
         protected readonly Context _context;
         protected abstract DbSet<TEntity> EntitySet { get; }
+        protected readonly IEntityGenerator _generator;
 
         public RepositoryBase(Context context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+        public RepositoryBase(Context context, IEntityGenerator generator)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _generator = generator ?? throw new ArgumentNullException(nameof(generator));
         }
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)

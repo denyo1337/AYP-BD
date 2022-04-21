@@ -17,9 +17,9 @@ namespace Infrastructure.Validators
         {
             RuleFor(x => x.Email)
                 .EmailAddress()
-                .Custom(async (value, context) =>
+                .Custom((value, context) =>
                {
-                   var isTaken = await _dbContext.Users.AnyAsync(x => x.Email == value);
+                   var isTaken = _dbContext.Users.Any(x => x.Email == value);
                    if (isTaken)
                    {
                        context.AddFailure(nameof(User.Email), $"Email : {value} is taken ");
@@ -32,7 +32,7 @@ namespace Infrastructure.Validators
                 .MinimumLength(3)
                 .Custom(async (value, context) =>
                 {
-                    var isTaken = await _dbContext.Users.AnyAsync(x => x.NickName == value);
+                    var isTaken = _dbContext.Users.Any(x => x.NickName == value);
                     if (isTaken)
                     {
                         context.AddFailure($"Nick {value} jest zajęty");
