@@ -1,8 +1,9 @@
 ﻿using Application.Functions.Commands;
-using MediatR;
+using Application.Functions.Commands.UserCommands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using MediatR;
 
 namespace WebAPI.Controllers
 {
@@ -16,12 +17,14 @@ namespace WebAPI.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet("test/{text}")]
-        [SwaggerOperation(Summary = "Test")]
-        public async Task<IActionResult> Get([FromRoute] string text)
+
+        [HttpPost]
+        [SwaggerOperation(Summary = "Register user, no steam profile info needed")]
+        public async Task<IActionResult> Post([FromBody] RegisterUserCommand command)
         {
-            var test = await _mediator.Send(new TestCommand(text));
-            return Ok(test);
+
+
+            return Ok();
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Domain.Models
 {
-    public class User : AuditableEntity
+    public class User : AuditableEntity, IEntity
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Email { get; set; }
         public string NickName { get; set; }
         public string SteamNickName { get; set; }
