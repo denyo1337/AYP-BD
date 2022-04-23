@@ -9,6 +9,7 @@ namespace Infrastructure.Data.ModelsConfiguration
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedNever();
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(100);

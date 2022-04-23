@@ -9,6 +9,6 @@ namespace Domain.Data.Interfaces
 {
     public interface IUsersRepostiory : IRepository<User>
     {
-        Task<bool> AddUser(User user);
+        Task<bool> AddUser(User user, CancellationToken cancellationToken);
     }
 }

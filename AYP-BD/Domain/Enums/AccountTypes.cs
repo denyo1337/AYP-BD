@@ -8,7 +8,7 @@ namespace Domain.Enums
 {
     public enum AccountTypes
     {
-        User,
-        Admin
+        User = 1,
+        Admin = 2
     }
 }

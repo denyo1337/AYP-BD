@@ -10,6 +10,7 @@ namespace WebAPI.Installers
             {
                 option.UseSqlServer(configuration.GetConnectionString("Default"));
             });
+            services.AddScoped<Seeder>();
         }
     }
 }

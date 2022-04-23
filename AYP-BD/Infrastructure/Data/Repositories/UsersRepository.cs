@@ -17,7 +17,7 @@ namespace Infrastructure.Data.Repositories
 
         protected override DbSet<User> EntitySet => _context.Users;
 
-        public async Task<bool> AddUser(User user)
+        public async Task<bool> AddUser(User user, CancellationToken cancellationToken)
         {
             await _context.Users.AddAsync(user);
             return await _context.SaveChangesAsync() > 0;

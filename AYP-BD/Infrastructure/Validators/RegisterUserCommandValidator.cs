@@ -30,7 +30,7 @@ namespace Infrastructure.Validators
                .Equal(e => e.ConfirmPassword);
             RuleFor(x => x.NickName)
                 .MinimumLength(3)
-                .Custom(async (value, context) =>
+                .Custom((value, context) =>
                 {
                     var isTaken = _dbContext.Users.Any(x => x.NickName == value);
                     if (isTaken)
