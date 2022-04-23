@@ -1,6 +1,6 @@
+using Application.Common;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using WebAPI;
 using WebAPI.Installers;
 
 var builder = WebApplication.CreateBuilder(args);

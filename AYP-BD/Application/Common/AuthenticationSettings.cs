@@ -1,4 +1,4 @@
-﻿namespace WebAPI
+﻿namespace Application.Common
 {
     public class AuthenticationSettings
     {

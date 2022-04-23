@@ -18,9 +18,15 @@ namespace WebAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         [SwaggerOperation(Summary = "Register user, no steam profile info needed")]
         public async Task<IActionResult> Post([FromBody] RegisterUserCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+        [HttpPost("sign-in")]
+        [SwaggerOperation(Summary ="Sing in into application using email & password")]
+        public async Task<IActionResult> LogIn([FromBody] SignInUserCommand command)
         {
             return Ok(await _mediator.Send(command));
         }

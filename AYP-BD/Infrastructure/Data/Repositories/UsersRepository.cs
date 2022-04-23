@@ -19,8 +19,15 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<bool> AddUser(User user, CancellationToken cancellationToken)
         {
-            await _context.Users.AddAsync(user);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.Users.AddAsync(user, cancellationToken);
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
+
+        public async Task<User> GetUser(string email, CancellationToken cancellationToken)
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
         }
     }
 }
