@@ -6,5 +6,6 @@ namespace Domain.Data
     {
         Task<T> GetAsync(long id);
         Task<T> AddAsync(T entity);
+        Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

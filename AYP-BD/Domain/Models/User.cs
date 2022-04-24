@@ -15,6 +15,7 @@ namespace Domain.Models
         public byte RoleId { get; set; }
         public bool? IsBanned { get; set; }
         public bool? IsActive { get; set; }
+        public string Gender { get; set; }
         public DateTime? LastLogOn { get; set; }
         #region domain actions
         public User Update()

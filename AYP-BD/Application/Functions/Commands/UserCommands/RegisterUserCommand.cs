@@ -14,8 +14,8 @@ namespace Application.Functions.Commands.UserCommands
         public string Natonality { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public string Gender { get; set; }
 
-  
     }
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, bool>
     {
@@ -43,6 +43,7 @@ namespace Application.Functions.Commands.UserCommands
                 IsBanned = false,
                 LastModified = DateTime.Now,
                 RoleId = (byte)AccountTypes.User,
+                Gender = request.Gender,
             };
             var passwordHash = _passwordHasher.HashPassword(user, request.Password);
             user.PasswordHash = passwordHash;

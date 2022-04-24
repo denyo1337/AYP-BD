@@ -35,12 +35,18 @@ namespace Infrastructure.Validators
                     var isTaken = _dbContext.Users.Any(x => x.NickName == value);
                     if (isTaken)
                     {
-                        context.AddFailure($"Nick {value} jest zajęty");
+                        context.AddFailure(nameof(User.NickName), $"Nick {value} jest zajęty");
                     }
                 });
-            RuleFor(x => x.Natonality)
+            RuleFor(x => x.Gender)
                 .NotEmpty()
-                .MinimumLength(4);
+                .Custom((value, context) =>
+                {
+                    if(value.ToLower() != "female" && value.ToLower() != "male")
+                    {
+                        context.AddFailure(nameof(User.Gender), "Choose your gender");
+                    }
+                });
         }
     }
 }

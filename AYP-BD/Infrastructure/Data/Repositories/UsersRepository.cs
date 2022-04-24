@@ -29,5 +29,10 @@ namespace Infrastructure.Data.Repositories
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
         }
+
+        public async Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken)
+        {
+            return await _context.Users.AnyAsync(x => x.Email == email);
+        }
     }
 }

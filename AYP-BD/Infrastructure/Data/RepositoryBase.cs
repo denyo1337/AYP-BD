@@ -3,7 +3,6 @@ using Domain.Common;
 using Domain.Data;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Infrastructure.Data
 {
     public abstract class RepositoryBase<TEntity, Context> : IRepository<TEntity>
@@ -34,6 +33,11 @@ namespace Infrastructure.Data
         public virtual async Task<TEntity> GetAsync(long id)
         {
             return await EntitySet.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
     }
 }

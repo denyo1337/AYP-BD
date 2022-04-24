@@ -76,6 +76,7 @@ namespace WebAPI.Installers
                 IsBanned = false,
                 LastModified = DateTime.Now,
                 RoleId = (byte)AccountTypes.Admin,
+                Gender = "male"
             };
             admin.PasswordHash = _passwordHasher.HashPassword(admin, _configuration["DefaultPassword"]);
             return admin;

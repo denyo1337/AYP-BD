@@ -46,10 +46,10 @@ namespace Application.Functions.Commands.UserCommands
 
             List<Claim> claims = new()
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.NickName),
-                new Claim(ClaimTypes.Role, user.Role.Name),
+                new Claim(AybClaims.UserId, user.Id.ToString()),
+                new Claim(AybClaims.EmailAddress, user.Email),
+                new Claim(AybClaims.NickName, user.NickName),
+                new Claim(AybClaims.Role, user.Role.Name),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -61,6 +61,9 @@ namespace Application.Functions.Commands.UserCommands
               expires: expires,
               signingCredentials: cred);
             var tokenHandler = new JwtSecurityTokenHandler();
+            user.LastLogOn = DateTime.Now;
+
+            await _usersRepostiory.SaveChangesAsync(cancellationToken);
 
             return new(tokenHandler.WriteToken(token), LoginVerificationResult.Succes);
         }

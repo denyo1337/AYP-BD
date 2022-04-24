@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using MediatR;
+using Application.Functions.Queries.UsersQueries;
 
 namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("ayb/api/[controller]")]
-    [AllowAnonymous]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
 
         [HttpPost("register")]
         [SwaggerOperation(Summary = "Register user, no steam profile info needed")]
-        public async Task<IActionResult> Post([FromBody] RegisterUserCommand command)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
@@ -29,6 +29,12 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> LogIn([FromBody] SignInUserCommand command)
         {
             return Ok(await _mediator.Send(command));
+        }
+        [HttpGet("validate/email/{email}")]
+        [SwaggerOperation(Summary ="Check if email is already taken")]
+        public async Task<IActionResult> ValidateEmailIsTaken([FromRoute] string email)
+        {
+            return Ok(await _mediator.Send(new IsEmailTakenQuery(email)));
         }
     }
 }
