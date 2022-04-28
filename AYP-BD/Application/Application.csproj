@@ -11,11 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Functions\Queries\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Mappings\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

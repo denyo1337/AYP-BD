@@ -23,6 +23,11 @@ namespace Infrastructure.Data.Repositories
             return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
 
+        public Task<User> GetAccountDetails(long id, CancellationToken cancellationToken)
+        {
+            return _context.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+        }
+
         public async Task<User> GetUser(string email, CancellationToken cancellationToken)
         {
             return await _context.Users
@@ -32,7 +37,7 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken)
         {
-            return await _context.Users.AnyAsync(x => x.Email == email);
+            return await _context.Users.AnyAsync(x => x.Email == email, cancellationToken: cancellationToken);
         }
     }
 }

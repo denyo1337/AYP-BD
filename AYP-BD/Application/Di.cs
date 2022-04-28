@@ -1,4 +1,5 @@
 ﻿using Application.Common;
+using Application.Services;
 using Domain.Models;
 using IdGen;
 using MediatR;
@@ -16,6 +17,7 @@ namespace Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IUserContextService, UserContextService>();
 
             //here register MiddleWare for error handling
             //passwordhashers, contextProvider, mediator, services etc.
