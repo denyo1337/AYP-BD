@@ -1,7 +1,7 @@
 ﻿using Application.Common;
+using Application.Interfaces;
 using Application.Services;
 using Domain.Models;
-using IdGen;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +18,7 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IUserContextService, UserContextService>();
+            services.AddScoped<IHttpRequestHandler, RequestHandler>();
 
             //here register MiddleWare for error handling
             //passwordhashers, contextProvider, mediator, services etc.

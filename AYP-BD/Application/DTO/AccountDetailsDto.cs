@@ -1,10 +1,5 @@
 ﻿using Domain.Models;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.DTO
 {
@@ -17,6 +12,7 @@ namespace Application.DTO
         public string Nationality { get; set; }
         public string Gender { get; set; }
         public string LastLogOn { get; set; }
+        public string SteamCommunityUrl { get; set; }
         public AccountDetailsDto(User user)
         {
             Email = user.Email;
@@ -25,6 +21,7 @@ namespace Application.DTO
             PhoneNumber = user.PhoneNumber;
             Nationality = user.Nationality;
             Gender = user.Gender;
+            SteamCommunityUrl = user.CommunityUrl;
             LastLogOn = user.LastLogOn.Value.ToString("g", CultureInfo.GetCultureInfo("de-DE"));
         }
     }

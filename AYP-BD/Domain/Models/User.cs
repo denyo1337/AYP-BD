@@ -16,10 +16,21 @@ namespace Domain.Models
         public bool? IsBanned { get; set; }
         public bool? IsActive { get; set; }
         public string Gender { get; set; }
+        public string CommunityUrl { get; set; }
+        public byte[] Avatar { get; set; }
         public DateTime? LastLogOn { get; set; }
         #region domain actions
-        public User Update()
+        public User Update(string email, string nickname, int? phoneNumber, string nationality, string steamNickName)
         {
+            if(!string.IsNullOrEmpty(email))
+                Email = email;
+            if (!string.IsNullOrEmpty(nickname))
+                NickName = nickname;
+            if(!string.IsNullOrEmpty(steamNickName))
+                SteamNickName = steamNickName;
+
+            PhoneNumber = phoneNumber;
+            Nationality = nationality;
 
             return this;
         }

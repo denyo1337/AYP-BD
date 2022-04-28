@@ -2,11 +2,6 @@
 using Application.Services;
 using Domain.Data.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Functions.Queries.UsersQueries
 {
@@ -25,7 +20,7 @@ namespace Application.Functions.Queries.UsersQueries
         public async Task<AccountDetailsDto> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
         {
             var userId = _userContext.GetUserId;
-            if(userId == null)
+            if (userId == null)
             {
                 return null;
             }
