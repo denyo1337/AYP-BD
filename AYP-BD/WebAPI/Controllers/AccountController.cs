@@ -60,5 +60,13 @@ namespace WebAPI.Controllers
 
             return Ok(result);
         }
+        [HttpGet("validate/{steamId:long}")]
+        [SwaggerOperation(Summary = "Endpoint to validate if steamId providen is valid")]
+        [Produces(typeof(bool))]
+        public async Task<IActionResult> CheckIfSteamIdValid(long steamId)
+        {
+            return Ok(await _mediator.Send(new IsSteamIdValidQuery(steamId)));
+        }
+
     }
 }

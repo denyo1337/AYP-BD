@@ -24,6 +24,7 @@ namespace Application.Functions.Queries.UsersQueries
             {
                 return null;
             }
+
             var user = await _usersRepostiory.GetAccountDetails((long)userId, cancellationToken);
 
             return new(user);

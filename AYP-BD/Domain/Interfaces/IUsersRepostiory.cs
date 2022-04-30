@@ -14,5 +14,7 @@ namespace Domain.Data.Interfaces
         Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken);
         Task<User> GetAccountDetails(long id, CancellationToken cancellationToken);
         Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken);
+        Task<bool> DeleteSteamUserData(SteamUserData id, CancellationToken cancellationToken);
+        Task<bool> IsSteamIDTaken(long steamid, CancellationToken cancellationToken);
     }
 }

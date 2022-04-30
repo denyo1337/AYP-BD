@@ -39,14 +39,20 @@ public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSt
         var userId = _userContext.GetUserId;
         if (userId == null) return false;
         var user = await _usersRepostiory.GetAccountDetailsWithSteamUserData(userId.Value, cancellationToken);
+        if (user == null || !user.SteamId.HasValue) return false;
 
-        if (user == null) return false;
+        var userSteamData = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamIds = user.SteamId.Value });
 
-        var userSteamData = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamIds = user.SteamId });
+        if (userSteamData.StatusCode != StatusCodes.Status200OK ) return false;
 
-        if (userSteamData.StatusCode != StatusCodes.Status200OK || userSteamData.Model is null) return false;
-
+        if(userSteamData.Model.Response.Players.Count == 0)
+        {
+            user.SteamId = null;
+            return await _usersRepostiory.DeleteSteamUserData(user.SteamUserData, cancellationToken);
+        }
         var data = userSteamData.Model.Response.Players.FirstOrDefault();
+
+        if(data == null) return false;
 
         if (user.SteamUserData == null)
         {

@@ -23,9 +23,17 @@ namespace Infrastructure.Data.Repositories
             return await _context.SaveChangesAsync(cancellationToken) > 0;
         }
 
+        public async Task<bool> DeleteSteamUserData(SteamUserData steamUserData, CancellationToken cancellationToken)
+        {
+            _context.SteamUserDatas.Remove(steamUserData);
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
+
         public Task<User> GetAccountDetails(long id, CancellationToken cancellationToken)
         {
-            return _context.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+            return _context.Users
+                .Include(x => x.SteamUserData)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
         public async Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken)
@@ -45,6 +53,10 @@ namespace Infrastructure.Data.Repositories
         public async Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken)
         {
             return await _context.Users.AnyAsync(x => x.Email == email, cancellationToken: cancellationToken);
+        }
+        public Task<bool> IsSteamIDTaken(long steamid, CancellationToken cancellationToken)
+        {
+            return  _context.Users.AnyAsync(x => x.SteamId == steamid, cancellationToken: cancellationToken);
         }
     }
 }
