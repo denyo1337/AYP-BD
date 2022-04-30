@@ -10,6 +10,7 @@ namespace WebAPI.Installers
         {
             //services.AddScoped<IValidator<Comand>, Validator>(); scheme
             services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>(); 
+            services.AddScoped<IValidator<AssignSteamIdToUserCommand>, AssignSteamIdToUserCommandValidator>(); 
         }
     }
 }

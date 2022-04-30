@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AypDbContext))]
-    partial class AypDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220430155430_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,17 +59,19 @@ namespace Infrastructure.Migrations
                     b.Property<string>("RealName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SteamId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SteamNationality")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("SteamUserDatas");
                 });
@@ -129,13 +133,10 @@ namespace Infrastructure.Migrations
                     b.Property<byte>("RoleId")
                         .HasColumnType("tinyint");
 
-                    b.Property<long?>("SteamId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("SteamNickName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SteamUserDataId")
+                    b.Property<long>("SteamUserDataId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -150,7 +151,8 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.User", "User")
                         .WithOne("SteamUserData")
                         .HasForeignKey("Domain.Models.SteamUserData", "UserId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

@@ -19,6 +19,10 @@ namespace Domain.Models
         public string CommunityUrl { get; set; }
         public byte[] Avatar { get; set; }
         public DateTime? LastLogOn { get; set; }
+        public long? SteamId { get; set; }
+        public virtual SteamUserData SteamUserData { get; set; }
+        public long? SteamUserDataId { get; set; }
+
         #region domain actions
         public User Update(string email, string nickname, int? phoneNumber, string nationality, string steamNickName)
         {
@@ -32,6 +36,19 @@ namespace Domain.Models
             PhoneNumber = phoneNumber;
             Nationality = nationality;
 
+            return this;
+        }
+
+        public User UpdateSteamId(long? steamId, bool? resetValue = false)
+        {
+            if (SteamId != steamId && steamId.HasValue)
+            {
+                SteamId = steamId;
+            }
+            if (resetValue.HasValue && resetValue.Value)
+            {
+                SteamId = null;
+            }
             return this;
         }
         #endregion

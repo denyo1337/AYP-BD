@@ -23,19 +23,19 @@ namespace Infrastructure.Data
             _generator = generator ?? throw new ArgumentNullException(nameof(generator));
         }
 
-        public virtual async Task<TEntity> AddAsync(TEntity entity)
+        public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellation = default)
         {
             await EntitySet.AddAsync(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
-        public virtual async Task<TEntity> GetAsync(long id)
+        public virtual async Task<TEntity> GetAsync(long id, CancellationToken cancellation = default)
         {
-            return await EntitySet.FirstOrDefaultAsync(x => x.Id == id);
+            return await EntitySet.FirstOrDefaultAsync(x => x.Id == id, cancellation);
         }
 
-        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken)
+        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _context.SaveChangesAsync(cancellationToken) > 0;
         }

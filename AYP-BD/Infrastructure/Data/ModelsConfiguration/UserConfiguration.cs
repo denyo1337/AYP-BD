@@ -15,6 +15,12 @@ namespace Infrastructure.Data.ModelsConfiguration
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired()
                 .HasForeignKey(p => p.RoleId);
+
+            builder.HasOne(x => x.SteamUserData)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasForeignKey<User>(x => x.Id);
+
             builder.Property(x => x.Email)
                 .IsRequired()
                 .HasMaxLength(255);
