@@ -32,16 +32,17 @@ namespace WebAPI.Controllers
         {
             return Ok(await _mediator.Send(new GetUserDetailsQuery()));
         }
-        //[HttpPut]
-        //[SwaggerOperation(Summary = "Update user account details")]
-        //[Produces(typeof(AccountDetailsDto))]
-        //[AllowAnonymous]
 
-        //public async Task<IActionResult> UpdateUserDetails([FromBody] UpdateAccountDetailsCommand dto)
-        //{
-        //    var result = await _mediator.Send(dto);
-        //    return StatusCode(204, new { id = "1" });
-        //}
+        [HttpPut]
+        [SwaggerOperation(Summary = "Update user account details")]
+        [Produces(typeof(AccountDetailsDto))]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateUserDetails([FromBody] UpdateAccountDetailsCommand dto)
+        {
+            var result = await _mediator.Send(dto);
+            return StatusCode(204, new { id = "1" });
+        }
+
         [HttpPut("setSteamId")]
         [SwaggerOperation(Summary = "Update steamId for user account")]
         [Produces(typeof(bool))]
@@ -49,6 +50,15 @@ namespace WebAPI.Controllers
         {
             var result = await _mediator.Send(command);
             return result ? Ok(result) : BadRequest();
+        }
+        [HttpPut("updateSteamData")]
+        [SwaggerOperation(Summary = "Update steamUserDetails")]
+        [Produces(typeof(bool))]
+        public async Task<IActionResult> UpdateSteamUserDetails()
+        {
+            var result = await _mediator.Send(new UpdateUserSteamDetailsCommand());
+
+            return Ok(result);
         }
     }
 }

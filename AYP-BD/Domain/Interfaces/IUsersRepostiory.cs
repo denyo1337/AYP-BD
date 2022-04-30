@@ -13,5 +13,6 @@ namespace Domain.Data.Interfaces
         Task<User> GetUser(string email, CancellationToken cancellationToken);
         Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken);
         Task<User> GetAccountDetails(long id, CancellationToken cancellationToken);
+        Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken);
     }
 }

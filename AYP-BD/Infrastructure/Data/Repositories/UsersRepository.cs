@@ -28,6 +28,13 @@ namespace Infrastructure.Data.Repositories
             return _context.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
+        public async Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken)
+        {
+            return await _context.Users
+                .Include(x => x.SteamUserData)
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken:cancellationToken);
+        }
+
         public async Task<User> GetUser(string email, CancellationToken cancellationToken)
         {
             return await _context.Users

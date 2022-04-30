@@ -12,7 +12,6 @@ namespace Application.Functions.Commands.UserCommands
         public int? PhoneNumber { get; set; }
         public string Nationality { get; set; }
         public string SteamNickName { get; set; }
-
     }
     public class UpdateAccountDetailsCommandHandler : IRequestHandler<UpdateAccountDetailsCommand, bool>
     {
@@ -30,10 +29,11 @@ namespace Application.Functions.Commands.UserCommands
         {
             var user = await _usersRepostiory.GetAccountDetails((long)_userContext.GetUserId, cancellationToken);
 
-            _ = await _httpHandler.Get<object>("d", new { i = true });
-
             if (user == null)
                 return false;
+
+            _ = await _httpHandler.Get<object>("d", new { i = true });
+
 
 
             user.Update(request.Email, request.NickName, request.PhoneNumber, request.Nationality, request.SteamNickName);

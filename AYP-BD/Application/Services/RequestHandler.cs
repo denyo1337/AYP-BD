@@ -14,12 +14,11 @@ namespace Application.Services
         public RequestHandler(IConfiguration configuration)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(IConfiguration));
+            privateWebApiKey = _configuration["SteamApiKey"]?.ToString();
         }
 
         public async Task<Response<T>> Get<T>(string path, object queryParams)
         {
-            privateWebApiKey = _configuration["SteamApiKey"]?.ToString();
-
             var response = await BASEURL
                 .AllowAnyHttpStatus()
                 .AppendPathSegment(path)
@@ -33,10 +32,8 @@ namespace Application.Services
             }
             catch (Exception)
             {
-
-                return new(response, default(T));
+                return new(response, default);
             }
-
         }
     }
 }

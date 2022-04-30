@@ -132,7 +132,7 @@ namespace Infrastructure.Migrations
                     b.Property<long?>("SteamId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("SteamNickName")
+                    b.Property<string>("Personaname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("SteamUserDataId")

@@ -133,7 +133,7 @@ namespace Infrastructure.Migrations
                     b.Property<byte>("RoleId")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("SteamNickName")
+                    b.Property<string>("Personaname")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("SteamUserDataId")

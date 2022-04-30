@@ -44,10 +44,14 @@ namespace Domain.Models
             if (SteamId != steamId && steamId.HasValue)
             {
                 SteamId = steamId;
+                LastModified = DateTime.Now;
+                LastModifiedBy = Email;
             }
             if (resetValue.HasValue && resetValue.Value)
             {
                 SteamId = null;
+                LastModified = DateTime.Now;
+                LastModifiedBy = Email;
             }
             return this;
         }

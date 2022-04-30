@@ -18,6 +18,38 @@ namespace Domain.Models
         public string SteamNationality { get; set; }
         public User User { get; set; }
         public long? UserId { get; set; }
+        #region SteamUserData domain actions
+        public SteamUserData()
+        {
 
+        }
+        public SteamUserData(long id, string steamNickname, string profileUrl, string avatarUrl, string realName, string accountCreated, string nationality)
+        {
+            Id = id;
+            PersonName = steamNickname;
+            ProfileUrl = profileUrl;
+            AvatarfullUrl = avatarUrl;
+            RealName = realName;
+            AccountCreated = accountCreated;
+            SteamNationality = nationality;
+        }
+        public SteamUserData UpdateSteamUserData(string steamNickname, string profileUrl, string avatarUrl, string realName, string accountCreated, string nationality)
+        {
+            if (PersonName != steamNickname)
+                PersonName = steamNickname;
+            if (ProfileUrl != profileUrl)
+                ProfileUrl = profileUrl;
+            if (AvatarfullUrl != avatarUrl)
+                AvatarfullUrl = avatarUrl;
+            if (RealName != realName)
+                RealName = realName;
+            if (AccountCreated != accountCreated)
+                AccountCreated = accountCreated;
+            if (SteamNationality != nationality)
+                SteamNationality = nationality;
+            return this;
+        }
+        #endregion
     }
+
 }
