@@ -1,13 +1,7 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
-using Application.Services;
 using Domain.Data.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Functions.Queries.UsersQueries
 {
@@ -36,9 +30,9 @@ namespace Application.Functions.Queries.UsersQueries
 
         public async Task<bool> Handle(IsSteamIdValidQuery request, CancellationToken cancellationToken)
         {
-            var player = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamids = request.SteamId});
+            var player = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamids = request.SteamId });
 
-            if(player.Model.Response.Players.Any() &&  !await _usersRepostiory.IsSteamIDTaken(request.SteamId, cancellationToken))
+            if (player.Model.Response.Players.Any() && !await _usersRepostiory.IsSteamIDTaken(request.SteamId, cancellationToken))
             {
                 return true;
             }

@@ -9,8 +9,8 @@ namespace WebAPI.Installers
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
             //services.AddScoped<IValidator<Comand>, Validator>(); scheme
-            services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>(); 
-            services.AddScoped<IValidator<AssignSteamIdToUserCommand>, AssignSteamIdToUserCommandValidator>(); 
+            services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>();
+            services.AddScoped<IValidator<AssignSteamIdToUserCommand>, AssignSteamIdToUserCommandValidator>();
         }
     }
 }

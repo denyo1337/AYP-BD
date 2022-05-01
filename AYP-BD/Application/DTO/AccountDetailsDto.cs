@@ -24,7 +24,7 @@ namespace Application.DTO
             NickName = user.NickName;
             SteamNickName = user.SteamUserData?.PersonName;
             PhoneNumber = user.PhoneNumber;
-            Nationality = user.Nationality ?? user.SteamUserData.SteamNationality ;
+            Nationality = user.Nationality ?? user.SteamUserData.SteamNationality;
             Gender = user.Gender;
             ProfileUrl = user.SteamUserData?.ProfileUrl;
             AvatarUrl = user.SteamUserData?.AvatarfullUrl;

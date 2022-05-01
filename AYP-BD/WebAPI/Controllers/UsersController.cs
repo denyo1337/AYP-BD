@@ -1,10 +1,8 @@
-﻿using Application.Functions.Commands;
-using Application.Functions.Commands.UserCommands;
-using Microsoft.AspNetCore.Authorization;
+﻿using Application.Functions.Commands.UserCommands;
+using Application.Functions.Queries.UsersQueries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using MediatR;
-using Application.Functions.Queries.UsersQueries;
 
 namespace WebAPI.Controllers
 {
@@ -25,13 +23,13 @@ namespace WebAPI.Controllers
             return Ok(await _mediator.Send(command));
         }
         [HttpPost("sign-in")]
-        [SwaggerOperation(Summary ="Sing in into application using email & password")]
+        [SwaggerOperation(Summary = "Sing in into application using email & password")]
         public async Task<IActionResult> LogIn([FromBody] SignInUserCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
         [HttpGet("validate/email/{email}")]
-        [SwaggerOperation(Summary ="Check if email is already taken")]
+        [SwaggerOperation(Summary = "Check if email is already taken")]
         public async Task<IActionResult> ValidateEmailIsTaken([FromRoute] string email)
         {
             return Ok(await _mediator.Send(new IsEmailTakenQuery(email)));

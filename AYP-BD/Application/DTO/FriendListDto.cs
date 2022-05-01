@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.DTO
 {
@@ -18,7 +13,7 @@ namespace Application.DTO
         [JsonProperty("friends")]
         public List<Friend> Friends { get; set; }
     }
- 
+
     public class Friend
     {
         public string SteamId { get; set; }

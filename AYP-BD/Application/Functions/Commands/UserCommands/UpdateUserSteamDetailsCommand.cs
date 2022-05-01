@@ -6,11 +6,6 @@ using Application.Services;
 using Domain.Data.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Functions.Commands.UserCommands
 {
@@ -43,16 +38,16 @@ public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSt
 
         var userSteamData = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamIds = user.SteamId.Value });
 
-        if (userSteamData.StatusCode != StatusCodes.Status200OK ) return false;
+        if (userSteamData.StatusCode != StatusCodes.Status200OK) return false;
 
-        if(userSteamData.Model.Response.Players.Count == 0)
+        if (userSteamData.Model.Response.Players.Count == 0)
         {
             user.SteamId = null;
             return await _usersRepostiory.DeleteSteamUserData(user.SteamUserData, cancellationToken);
         }
         var data = userSteamData.Model.Response.Players.FirstOrDefault();
 
-        if(data == null) return false;
+        if (data == null) return false;
 
         if (user.SteamUserData == null)
         {
@@ -67,13 +62,13 @@ public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSt
         }
         else
         {
-           user.SteamUserData.UpdateSteamUserData(
-               data.SteamNickName,
-               data.ProfileUrl,
-               data.AvatarfullUrl,
-               data.RealName,
-               data.AccountCreated.UnixTimeStampToDateTime(),
-               data.SteamNationality);
+            user.SteamUserData.UpdateSteamUserData(
+                data.SteamNickName,
+                data.ProfileUrl,
+                data.AvatarfullUrl,
+                data.RealName,
+                data.AccountCreated.UnixTimeStampToDateTime(),
+                data.SteamNationality);
         }
 
         return await _usersRepostiory.SaveChangesAsync(cancellationToken);

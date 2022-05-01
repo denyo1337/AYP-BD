@@ -2,7 +2,7 @@
 
 namespace Domain.Data
 {
-    public interface IRepository<T> where T: class, IEntity
+    public interface IRepository<T> where T : class, IEntity
     {
         Task<T> GetAsync(long id, CancellationToken cancellationToken);
         Task<T> AddAsync(T entity, CancellationToken cancellationToken);

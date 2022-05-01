@@ -1,6 +1,4 @@
-﻿using Domain.Common;
-
-namespace Domain.Common
+﻿namespace Domain.Common
 {
     public abstract class AuditableEntity
     {

@@ -1,11 +1,6 @@
 ﻿using Domain.Data.Interfaces;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -40,7 +35,7 @@ namespace Infrastructure.Data.Repositories
         {
             return await _context.Users
                 .Include(x => x.SteamUserData)
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken:cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
         public async Task<User> GetUser(string email, CancellationToken cancellationToken)
@@ -56,7 +51,7 @@ namespace Infrastructure.Data.Repositories
         }
         public Task<bool> IsSteamIDTaken(long steamid, CancellationToken cancellationToken)
         {
-            return  _context.Users.AnyAsync(x => x.SteamId == steamid, cancellationToken: cancellationToken);
+            return _context.Users.AnyAsync(x => x.SteamId == steamid, cancellationToken: cancellationToken);
         }
     }
 }

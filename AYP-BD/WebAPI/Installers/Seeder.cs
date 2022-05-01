@@ -81,6 +81,6 @@ namespace WebAPI.Installers
             admin.PasswordHash = _passwordHasher.HashPassword(admin, _configuration["DefaultPassword"]);
             return admin;
         }
-     }
     }
+}
 

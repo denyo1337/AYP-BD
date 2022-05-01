@@ -22,11 +22,11 @@ namespace Domain.Models
         #region domain actions
         public User Update(string email, string nickname, int? phoneNumber, string nationality)
         {
-            if(!string.IsNullOrEmpty(email))
+            if (!string.IsNullOrEmpty(email))
                 Email = email;
             if (!string.IsNullOrEmpty(nickname))
                 NickName = nickname;
-       
+
 
             PhoneNumber = phoneNumber;
             Nationality = nationality;

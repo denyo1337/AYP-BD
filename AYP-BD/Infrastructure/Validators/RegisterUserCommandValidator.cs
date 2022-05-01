@@ -2,12 +2,6 @@
 using Domain.Models;
 using FluentValidation;
 using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Validators
 {
@@ -42,7 +36,7 @@ namespace Infrastructure.Validators
                 .NotEmpty()
                 .Custom((value, context) =>
                 {
-                    if(value.ToLower() != "female" && value.ToLower() != "male")
+                    if (value.ToLower() != "female" && value.ToLower() != "male")
                     {
                         context.AddFailure(nameof(User.Gender), "Choose your gender");
                     }

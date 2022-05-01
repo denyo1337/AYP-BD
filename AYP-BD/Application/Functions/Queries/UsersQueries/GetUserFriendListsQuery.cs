@@ -4,12 +4,7 @@ using Application.Interfaces;
 using Domain.Data.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Functions.Queries.UsersQueries
 {
@@ -60,7 +55,7 @@ namespace Application.Functions.Queries.UsersQueries
                     NickName = x.SteamNickName,
                     ProfileUrl = x.ProfileUrl,
                     RealName = x.RealName,
-                    TimeCreated =  x.AccountCreated.UnixTimeStampToDateTime().ToString("g", CultureInfo.GetCultureInfo("de-DE"))
+                    TimeCreated = x.AccountCreated.UnixTimeStampToDateTime().ToString("g", CultureInfo.GetCultureInfo("de-DE"))
                 }).ToList();
             }
             else
