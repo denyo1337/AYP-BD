@@ -1,16 +1,13 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.DTO
 {
-    public class UserSteamDtaDto
-    {
-        public Response Response { get; set; }
-    }
-    public class Response
-    {
-        public List<Player> Players { get; set; }
-    }
-    public class Player
+    public class PlayerDto
     {
         [JsonProperty("personaname")]
         public string SteamNickName { get; set; }
@@ -21,14 +18,14 @@ namespace Application.DTO
         [JsonProperty("realname")]
         public string RealName { get; set; }
         [JsonProperty("timecreated")]
-        public long AccountCreated { get; set; }
+        public DateTime? AccountCreated { get; set; }
         [JsonProperty("loccountrycode")]
         public string SteamNationality { get; set; }
         [JsonProperty("steamid")]
         public string SteamId { get; set; }
         [JsonProperty("personastate")]
-        public int IsOnline { get; set; }
-        public Player()
+        public bool IsOnline { get; set; }
+        public PlayerDto()
         {
 
         }

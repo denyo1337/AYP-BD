@@ -17,7 +17,10 @@ namespace Application.DTO
         public string RealName { get; set; }
         public string SteamAccountCreatedAt { get; set; }
         public string SteamId { get; set; }
+        public AccountDetailsDto()
+        {
 
+        }
         public AccountDetailsDto(User user)
         {
             Email = user.Email;

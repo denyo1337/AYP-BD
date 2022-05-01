@@ -14,7 +14,7 @@ namespace Application.DTO
         [JsonProperty("avatarfull")]
         public string AvatarFull { get; set; }
         public string RealName { get; set; }
-        public string TimeCreated { get; set; }
+        public DateTime TimeCreated { get; set; }
         [JsonProperty("loccountrycode")]
         public string Loccountrycode { get; set; }
     }

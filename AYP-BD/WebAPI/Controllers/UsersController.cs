@@ -1,6 +1,9 @@
-﻿using Application.Functions.Commands.UserCommands;
+﻿using Application.Common;
+using Application.DTO;
+using Application.Functions.Commands.UserCommands;
 using Application.Functions.Queries.UsersQueries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -8,6 +11,7 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("ayb/api/[controller]")]
+    [AllowAnonymous]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -33,6 +37,22 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> ValidateEmailIsTaken([FromRoute] string email)
         {
             return Ok(await _mediator.Send(new IsEmailTakenQuery(email)));
+        }
+        [HttpGet("searchPlayer/{phrase}")]
+        [SwaggerOperation(Summary = "Get user by  name specified in url or profile name")]
+        [Produces(typeof(PlayerDto))]
+        public async Task<IActionResult> GetUserByNameOrSteamId([FromRoute] string phrase)
+        {
+            var profile = await _mediator.Send(new GetUserSteamProfileBySteamIdOrNick(phrase));
+            return profile is not null ? Ok(profile) : NotFound();
+        }
+        [HttpGet("friendsLists/{steamId}")]
+        [SwaggerOperation(Summary = "Endpoint to return user friends list")]
+        [Produces(typeof(PageResult<FriendDetailsDto>))]
+        public async Task<IActionResult> GetFriendsList([FromRoute] string steamId, [FromQuery] FriendsListQueryParams queryParams)
+        {
+            var result = await _mediator.Send(new GetUserFriendListsQuery(steamId, queryParams));
+            return Ok(result);
         }
     }
 }

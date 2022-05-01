@@ -1,4 +1,5 @@
 ﻿using Application.Functions.Commands.UserCommands;
+using Application.Functions.Queries.UsersQueries;
 using FluentValidation;
 using Infrastructure.Validators;
 
@@ -11,6 +12,7 @@ namespace WebAPI.Installers
             //services.AddScoped<IValidator<Comand>, Validator>(); scheme
             services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>();
             services.AddScoped<IValidator<AssignSteamIdToUserCommand>, AssignSteamIdToUserCommandValidator>();
+            services.AddScoped<IValidator<GetUserFriendListsQuery>, GetUserFriendListsQueryValidator>();
         }
     }
 }
