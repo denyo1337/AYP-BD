@@ -5,22 +5,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class userAvatarColumn : Migration
+    public partial class DeletedNotUsedColumnFromUsers : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "Avatar",
+                table: "Users");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<byte[]>(
                 name: "Avatar",
                 table: "Users",
                 type: "varbinary(max)",
                 nullable: true);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "Avatar",
-                table: "Users");
         }
     }
 }

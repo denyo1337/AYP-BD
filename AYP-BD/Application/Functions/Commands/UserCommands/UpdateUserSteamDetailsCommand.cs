@@ -62,7 +62,7 @@ public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSt
                 data.ProfileUrl,
                 data.AvatarfullUrl,
                 data.RealName,
-                data.AccountCreated,
+                data.AccountCreated.UnixTimeStampToDateTime(),
                 data.SteamNationality);
         }
         else
@@ -72,7 +72,7 @@ public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSt
                data.ProfileUrl,
                data.AvatarfullUrl,
                data.RealName,
-               data.AccountCreated,
+               data.AccountCreated.UnixTimeStampToDateTime(),
                data.SteamNationality);
         }
 

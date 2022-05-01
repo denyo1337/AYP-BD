@@ -20,7 +20,8 @@ namespace Infrastructure.Data.ModelsConfiguration
                 .WithOne(x => x.SteamUserData)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey<SteamUserData>(x => x.UserId);
-
+            builder.Property(x => x.PersonName)
+                .HasColumnName(nameof(SteamUserData.PersonName));
         }
     }
 }

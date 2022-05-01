@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AypDbContext))]
-    [Migration("20220424201553_AddedGenderForuser")]
-    partial class AddedGenderForuser
+    [Migration("20220501114509_DeletedNotUsedColumnFromUsers")]
+    partial class DeletedNotUsedColumnFromUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,10 +39,49 @@ namespace Infrastructure.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Domain.Models.SteamUserData", b =>
+                {
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("AccountCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AvatarfullUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PersonName");
+
+                    b.Property<string>("ProfileUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RealName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SteamNationality")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("SteamUserDatas");
+                });
+
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("CommunityUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -90,14 +129,24 @@ namespace Infrastructure.Migrations
                     b.Property<byte>("RoleId")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("Personaname")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("SteamId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.Models.SteamUserData", b =>
+                {
+                    b.HasOne("Domain.Models.User", "User")
+                        .WithOne("SteamUserData")
+                        .HasForeignKey("Domain.Models.SteamUserData", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>
@@ -109,6 +158,11 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Domain.Models.User", b =>
+                {
+                    b.Navigation("SteamUserData");
                 });
 #pragma warning restore 612, 618
         }

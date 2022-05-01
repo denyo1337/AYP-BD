@@ -42,14 +42,15 @@ namespace Infrastructure.Migrations
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("AccountCreated")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("AccountCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("AvatarfullUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PersonName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PersonName");
 
                     b.Property<string>("ProfileUrl")
                         .HasColumnType("nvarchar(max)");
@@ -76,9 +77,6 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<long>("Id")
                         .HasColumnType("bigint");
-
-                    b.Property<byte[]>("Avatar")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("CommunityUrl")
                         .HasColumnType("nvarchar(max)");
@@ -130,12 +128,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<long?>("SteamId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Personaname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("SteamUserDataId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");

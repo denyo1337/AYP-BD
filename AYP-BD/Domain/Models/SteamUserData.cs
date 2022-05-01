@@ -14,7 +14,7 @@ namespace Domain.Models
         public string ProfileUrl { get; set; }
         public string AvatarfullUrl { get; set; }
         public string RealName { get; set; }
-        public string AccountCreated { get; set; }
+        public DateTime? AccountCreated { get; set; }
         public string SteamNationality { get; set; }
         public User User { get; set; }
         public long? UserId { get; set; }
@@ -23,7 +23,7 @@ namespace Domain.Models
         {
 
         }
-        public SteamUserData(long id, string steamNickname, string profileUrl, string avatarUrl, string realName, string accountCreated, string nationality)
+        public SteamUserData(long id, string steamNickname, string profileUrl, string avatarUrl, string realName, DateTime accountCreated, string nationality)
         {
             Id = id;
             PersonName = steamNickname;
@@ -33,7 +33,7 @@ namespace Domain.Models
             AccountCreated = accountCreated;
             SteamNationality = nationality;
         }
-        public SteamUserData UpdateSteamUserData(string steamNickname, string profileUrl, string avatarUrl, string realName, string accountCreated, string nationality)
+        public SteamUserData UpdateSteamUserData(string steamNickname, string profileUrl, string avatarUrl, string realName, DateTime accountCreated, string nationality)
         {
             if (PersonName != steamNickname)
                 PersonName = steamNickname;

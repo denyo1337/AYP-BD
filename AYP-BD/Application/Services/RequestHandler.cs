@@ -17,7 +17,7 @@ namespace Application.Services
             privateWebApiKey = _configuration["SteamApiKey"]?.ToString();
         }
 
-        public async Task<Response<T>> Get<T>(string path, object queryParams)
+        public async Task<Response<T>> Get<T>(string path, object queryParams = null)
         {
             var response = await BASEURL
                 .AllowAnyHttpStatus()

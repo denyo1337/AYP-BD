@@ -7,7 +7,6 @@ namespace Domain.Models
         public long Id { get; set; }
         public string Email { get; set; }
         public string NickName { get; set; }
-        public string SteamNickName { get; set; }
         public int? PhoneNumber { get; set; }
         public string Nationality { get; set; }
         public string PasswordHash { get; set; }
@@ -17,21 +16,17 @@ namespace Domain.Models
         public bool? IsActive { get; set; }
         public string Gender { get; set; }
         public string CommunityUrl { get; set; }
-        public byte[] Avatar { get; set; }
         public DateTime? LastLogOn { get; set; }
         public long? SteamId { get; set; }
         public virtual SteamUserData SteamUserData { get; set; }
-        public long? SteamUserDataId { get; set; }
-
         #region domain actions
-        public User Update(string email, string nickname, int? phoneNumber, string nationality, string steamNickName)
+        public User Update(string email, string nickname, int? phoneNumber, string nationality)
         {
             if(!string.IsNullOrEmpty(email))
                 Email = email;
             if (!string.IsNullOrEmpty(nickname))
                 NickName = nickname;
-            if(!string.IsNullOrEmpty(steamNickName))
-                SteamNickName = steamNickName;
+       
 
             PhoneNumber = phoneNumber;
             Nationality = nationality;

@@ -47,6 +47,10 @@ namespace Application.Functions.Commands.UserCommands
                 new Claim(AybClaims.NickName, user.NickName),
                 new Claim(AybClaims.Role, user.Role.Name),
             };
+            if (user.SteamId.HasValue)
+            {
+                claims.Add(new Claim(AybClaims.SteamId, user.SteamId.ToString()));
+            }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);

@@ -29,8 +29,12 @@ namespace Application.DTO
         [JsonProperty("realname")]
         public string RealName { get; set; }
         [JsonProperty("timecreated")]
-        public string AccountCreated { get; set; }
+        public long AccountCreated { get; set; }
         [JsonProperty("loccountrycode")]
         public string SteamNationality { get; set; }
+        [JsonProperty("steamid")]
+        public string SteamId { get; set; }
+        [JsonProperty("personastate")]
+        public int IsOnline { get; set; }
     }
 }

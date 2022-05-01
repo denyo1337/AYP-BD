@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class initReset : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,14 +28,17 @@ namespace Infrastructure.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     NickName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    SteamNickName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<int>(type: "int", maxLength: 15, nullable: true),
                     Nationality = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoleId = table.Column<byte>(type: "tinyint", nullable: false),
                     IsBanned = table.Column<bool>(type: "bit", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
-                    LastLogOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CommunityUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Avatar = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    LastLogOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SteamId = table.Column<long>(type: "bigint", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -51,6 +54,36 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SteamUserDatas",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    PersonName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfileUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AvatarfullUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RealName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SteamNationality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SteamUserDatas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SteamUserDatas_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SteamUserDatas_UserId",
+                table: "SteamUserDatas",
+                column: "UserId",
+                unique: true,
+                filter: "[UserId] IS NOT NULL");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
                 table: "Users",
@@ -59,6 +92,9 @@ namespace Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "SteamUserDatas");
+
             migrationBuilder.DropTable(
                 name: "Users");
 

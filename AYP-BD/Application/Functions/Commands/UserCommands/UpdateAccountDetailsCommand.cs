@@ -36,7 +36,7 @@ namespace Application.Functions.Commands.UserCommands
 
 
 
-            user.Update(request.Email, request.NickName, request.PhoneNumber, request.Nationality, request.SteamNickName);
+            user.Update(request.Email, request.NickName, request.PhoneNumber, request.Nationality);
 
 
             return await _usersRepostiory.SaveChangesAsync(cancellationToken);

@@ -67,6 +67,13 @@ namespace WebAPI.Controllers
         {
             return Ok(await _mediator.Send(new IsSteamIdValidQuery(steamId)));
         }
-
+        [HttpGet("friendsLists/{steamId}")]
+        [SwaggerOperation(Summary = "Endpoint to return user friends list")]
+        [Produces(typeof(IList<FriendDetailsDto>))]
+        public async Task<IActionResult> GetFriendsList([FromRoute] string steamId)
+        {
+            var result = await _mediator.Send(new GetUserFriendListsQuery(steamId));
+            return Ok(result);
+        }
     }
 }

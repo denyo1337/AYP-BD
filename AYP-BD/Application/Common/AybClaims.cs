@@ -6,5 +6,6 @@
         public static string EmailAddress => "emailaddress";
         public static string Role => "role";
         public static string UserId => "userId";
+        public static string SteamId => "steamId";
     }
 }

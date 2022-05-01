@@ -29,7 +29,7 @@ namespace Application.DTO
             ProfileUrl = user.SteamUserData?.ProfileUrl;
             AvatarUrl = user.SteamUserData?.AvatarfullUrl;
             RealName = user.SteamUserData?.RealName;
-            SteamAccountCreatedAt = user.SteamUserData?.AccountCreated;
+            SteamAccountCreatedAt = user.SteamUserData?.AccountCreated?.ToString("g", CultureInfo.GetCultureInfo("de-DE"));
             SteamId = user.SteamId.ToString();
             LastLogOn = user.LastLogOn.Value.ToString("g", CultureInfo.GetCultureInfo("de-DE"));
         }
