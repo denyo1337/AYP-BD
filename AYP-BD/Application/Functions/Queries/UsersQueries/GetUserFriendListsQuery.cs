@@ -19,12 +19,12 @@ namespace Application.Functions.Queries.UsersQueries
             QueryParams = queryParams;
         }
     }
-    public class GetUserFriendListsQueryHanlder : IRequestHandler<GetUserFriendListsQuery, PageResult<FriendDetailsDto>>
+    public class GetUserFriendListsQueryHandler : IRequestHandler<GetUserFriendListsQuery, PageResult<FriendDetailsDto>>
     {
         private readonly IHttpRequestHandler _httpHandler;
         private readonly string STEAM_FRIENDSLIST_PATH = "ISteamUser/GetFriendList/v1/";
         private readonly string STEAM_PLAYERSSUMMARIES_PATH = "ISteamUser/GetPlayerSummaries/v2/";
-        public GetUserFriendListsQueryHanlder(IHttpRequestHandler httpHandler, IUsersRepostiory usersRepostiory)
+        public GetUserFriendListsQueryHandler(IHttpRequestHandler httpHandler)
         {
             _httpHandler = httpHandler;
         }
@@ -41,9 +41,7 @@ namespace Application.Functions.Queries.UsersQueries
 
             if (friensListRequest.StatusCode == StatusCodes.Status200OK && friensListRequest.Model.FriendsList.Friends.Any())
             {
-
                 var friendsSteamIds = friensListRequest.Model.FriendsList.Friends.Select(x => x.SteamId).ToList();
-
 
                 for (int i = 0; i < friendsSteamIds.Count; i += 100)
                 {
@@ -88,7 +86,7 @@ namespace Application.Functions.Queries.UsersQueries
                     {nameof(FriendDetailsDto.NickName).ToLower(), r=>r.NickName },
                     {nameof(FriendDetailsDto.TimeCreated).ToLower(), r=>r.TimeCreated }
                 };
-                if(request.QueryParams.SortBy.ToLower() == nameof(FriendDetailsDto.IsOnline).ToLower())
+                if (request.QueryParams.SortBy.ToLower() == nameof(FriendDetailsDto.IsOnline).ToLower())
                 {
                     var selectedColumn = columnsSelectors[request.QueryParams.SortBy.ToLower()];
 
