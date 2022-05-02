@@ -32,11 +32,10 @@ namespace WebAPI.Controllers
         [HttpPut]
         [SwaggerOperation(Summary = "Update user account details")]
         [Produces(typeof(AccountDetailsDto))]
-        [AllowAnonymous]
         public async Task<IActionResult> UpdateUserDetails([FromBody] UpdateAccountDetailsCommand dto)
         {
             var result = await _mediator.Send(dto);
-            return StatusCode(204, new { id = "1" });
+            return result is not null ? Ok(result) : BadRequest();
         }
 
         [HttpPut("setSteamId")]
@@ -56,13 +55,6 @@ namespace WebAPI.Controllers
 
             return Ok(result);
         }
-        [HttpGet("validate/{steamId:long}")]
-        [SwaggerOperation(Summary = "Endpoint to validate if steamId providen is valid")]
-        [Produces(typeof(bool))]
-        public async Task<IActionResult> CheckIfSteamIdValid(long steamId)
-        {
-            return Ok(await _mediator.Send(new IsSteamIdValidQuery(steamId)));
-        }
-       
+      
     }
 }

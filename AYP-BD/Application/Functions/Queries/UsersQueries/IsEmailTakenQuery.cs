@@ -1,4 +1,5 @@
-﻿using Domain.Data.Interfaces;
+﻿using Application.Services;
+using Domain.Data.Interfaces;
 using MediatR;
 
 namespace Application.Functions.Queries.UsersQueries
@@ -15,13 +16,23 @@ namespace Application.Functions.Queries.UsersQueries
     public class IsEmailTakenQueryHandler : IRequestHandler<IsEmailTakenQuery, bool>
     {
         private readonly IUsersRepostiory _usersRepostiory;
-        public IsEmailTakenQueryHandler(IUsersRepostiory repostiory)
+        private readonly IUserContextService _userContext;
+
+        public IsEmailTakenQueryHandler(IUsersRepostiory repostiory, IUserContextService userContext)
         {
             _usersRepostiory = repostiory;
+            _userContext = userContext;
         }
         public async Task<bool> Handle(IsEmailTakenQuery request, CancellationToken cancellationToken)
         {
-            return await _usersRepostiory.IsEmailTaken(request.Email, cancellationToken);
+            if (_userContext?.GetUserId is not null && _userContext.GetUserId.HasValue)
+            {
+                return await _usersRepostiory.IsEmailTaken(request.Email,_userContext.GetUserId.Value , cancellationToken);
+            }
+            else
+            {
+                return await _usersRepostiory.IsEmailTaken(request.Email, cancellationToken);
+            }
         }
     }
 }

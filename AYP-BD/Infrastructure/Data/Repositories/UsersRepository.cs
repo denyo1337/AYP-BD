@@ -31,27 +31,35 @@ namespace Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
-        public async Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken)
+        public Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken)
         {
-            return await _context.Users
+            return _context.Users
                 .Include(x => x.SteamUserData)
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
-        public async Task<User> GetUser(string email, CancellationToken cancellationToken)
+        public Task<User> GetUser(string email, CancellationToken cancellationToken)
         {
-            return await _context.Users
+            return  _context.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
         }
 
-        public async Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken)
+        public Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken)
         {
-            return await _context.Users.AnyAsync(x => x.Email == email, cancellationToken: cancellationToken);
+            return  _context.Users.AnyAsync(x => x.Email == email, cancellationToken: cancellationToken);
+        }
+        public Task<bool> IsEmailTaken(string email, long userId, CancellationToken cancellationToken)
+        {
+            return _context.Users.AnyAsync(x => x.Email == email && x.Id != userId, cancellationToken: cancellationToken);
         }
         public Task<bool> IsSteamIDTaken(long steamid, CancellationToken cancellationToken)
         {
             return _context.Users.AnyAsync(x => x.SteamId == steamid, cancellationToken: cancellationToken);
+        }
+        public Task<bool> IsNickNameTaken(string nickname, CancellationToken cancellationToken)
+        {
+            return _context.Users.AnyAsync(x => x.NickName == nickname, cancellationToken);
         }
     }
 }

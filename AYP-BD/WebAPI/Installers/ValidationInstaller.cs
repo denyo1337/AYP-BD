@@ -13,6 +13,7 @@ namespace WebAPI.Installers
             services.AddScoped<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>();
             services.AddScoped<IValidator<AssignSteamIdToUserCommand>, AssignSteamIdToUserCommandValidator>();
             services.AddScoped<IValidator<GetUserFriendListsQuery>, GetUserFriendListsQueryValidator>();
+            services.AddScoped<IValidator<UpdateAccountDetailsCommand>, UpdateAccountDetailsCommandValidator>();
         }
     }
 }

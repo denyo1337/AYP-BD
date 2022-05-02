@@ -10,6 +10,7 @@ namespace Infrastructure.Validators
         public RegisterUserCommandValidator(AypDbContext _dbContext)
         {
             RuleFor(x => x.Email)
+                .NotEmpty()
                 .EmailAddress()
                 .Custom((value, context) =>
                {

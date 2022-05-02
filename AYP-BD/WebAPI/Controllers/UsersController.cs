@@ -38,6 +38,13 @@ namespace WebAPI.Controllers
         {
             return Ok(await _mediator.Send(new IsEmailTakenQuery(email)));
         }
+        [HttpGet("validate/nickName/{nickName}")]
+        [SwaggerOperation(Summary = "Endpoint to check if nickname is alrady taken")]
+        [Produces(typeof(bool))]
+        public async Task<IActionResult> ValidateNickName([FromRoute] string nickName)
+        {
+            return Ok(await _mediator.Send(new IsNickNameTakenQuery(nickName)));
+        }
         [HttpGet("searchPlayer/{phrase}")]
         [SwaggerOperation(Summary = "Get user by  name specified in url or profile name")]
         [Produces(typeof(PlayerDto))]
@@ -54,14 +61,7 @@ namespace WebAPI.Controllers
             var result = await _mediator.Send(new GetUserFriendListsQuery(steamId, queryParams));
             return Ok(result);
         }
-        [HttpGet("userStats/{steamId: long}")]
-        [SwaggerOperation(Summary = "Endpoint for fetching users stats by steamId")]
-        [Produces(typeof(StatsDto))]
-        public async Task<IActionResult> GetUserStats(string steamId)
-        {
-            var stats = await _mediator.Send(new GetUserStatsQuery(steamId));
-            return stats is not null ? Ok() : BadRequest();
-        }
+   
 
     }
 }

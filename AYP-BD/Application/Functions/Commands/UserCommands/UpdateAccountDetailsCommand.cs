@@ -1,45 +1,49 @@
-﻿using Application.Interfaces;
+﻿using Application.DTO;
+using Application.Interfaces;
 using Application.Services;
 using Domain.Data.Interfaces;
+using Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Functions.Commands.UserCommands
 {
-    public class UpdateAccountDetailsCommand : IRequest<bool>
+    public class UpdateAccountDetailsCommand : IRequest<AccountDetailsDto>
     {
         public string Email { get; set; }
         public string NickName { get; set; }
         public int? PhoneNumber { get; set; }
         public string Nationality { get; set; }
-        public string SteamNickName { get; set; }
+        public string Password { get; set; }
     }
-    public class UpdateAccountDetailsCommandHandler : IRequestHandler<UpdateAccountDetailsCommand, bool>
+    public class UpdateAccountDetailsCommandHandler : IRequestHandler<UpdateAccountDetailsCommand, AccountDetailsDto>
     {
         private readonly IUserContextService _userContext;
+        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IUsersRepostiory _usersRepostiory;
-        private readonly IHttpRequestHandler _httpHandler;
 
-        public UpdateAccountDetailsCommandHandler(IUserContextService userContext, IUsersRepostiory usersRepostiory, IHttpRequestHandler httpRequestHandler)
+        public UpdateAccountDetailsCommandHandler(IUserContextService userContext, IUsersRepostiory usersRepostiory, IPasswordHasher<User> passwordHasher)
         {
             _userContext = userContext;
             _usersRepostiory = usersRepostiory;
-            _httpHandler = httpRequestHandler;
+            _passwordHasher = passwordHasher;
         }
-        public async Task<bool> Handle(UpdateAccountDetailsCommand request, CancellationToken cancellationToken)
+        public async Task<AccountDetailsDto> Handle(UpdateAccountDetailsCommand request, CancellationToken cancellationToken)
         {
             var user = await _usersRepostiory.GetAccountDetails((long)_userContext.GetUserId, cancellationToken);
-
             if (user == null)
-                return false;
+                return null;
 
-            _ = await _httpHandler.Get<object>("d", new { i = true });
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
 
-
-
+            if (result == PasswordVerificationResult.Failed)
+                return null;
+        
             user.Update(request.Email, request.NickName, request.PhoneNumber, request.Nationality);
 
+            var isChanged =  await _usersRepostiory.SaveChangesAsync(cancellationToken);
 
-            return await _usersRepostiory.SaveChangesAsync(cancellationToken);
+            return isChanged ? new(user) : null;
         }
     }
 
