@@ -54,5 +54,14 @@ namespace WebAPI.Controllers
             var result = await _mediator.Send(new GetUserFriendListsQuery(steamId, queryParams));
             return Ok(result);
         }
+        [HttpGet("userStats/{steamId: long}")]
+        [SwaggerOperation(Summary = "Endpoint for fetching users stats by steamId")]
+        [Produces(typeof(StatsDto))]
+        public async Task<IActionResult> GetUserStats(string steamId)
+        {
+            var stats = await _mediator.Send(new GetUserStatsQuery(steamId));
+            return stats is not null ? Ok() : BadRequest();
+        }
+
     }
 }
