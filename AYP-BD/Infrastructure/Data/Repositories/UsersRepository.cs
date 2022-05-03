@@ -27,8 +27,8 @@ namespace Infrastructure.Data.Repositories
         public Task<User> GetAccountDetails(long id, CancellationToken cancellationToken)
         {
             return _context.Users
-                .Include(x => x.SteamUserData)
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+                    .Include(x => x.SteamUserData)
+                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
         }
 
         public Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken)

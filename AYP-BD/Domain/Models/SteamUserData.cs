@@ -44,6 +44,7 @@ namespace Domain.Models
                 SteamNationality = nationality;
             return this;
         }
+
         #endregion
     }
 

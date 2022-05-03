@@ -31,6 +31,7 @@ namespace Application.Functions.Commands.UserCommands
         public async Task<AccountDetailsDto> Handle(UpdateAccountDetailsCommand request, CancellationToken cancellationToken)
         {
             var user = await _usersRepostiory.GetAccountDetails((long)_userContext.GetUserId, cancellationToken);
+
             if (user == null)
                 return null;
 

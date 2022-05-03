@@ -11,6 +11,7 @@ namespace Application.Functions.Queries.UsersQueries
 {
     public class GetUserFriendListsQuery : IRequest<PageResult<FriendDetailsDto>>
     {
+        
         public string SteamID { get; set; }
         public FriendsListQueryParams QueryParams { get; set; }
         public GetUserFriendListsQuery(string steamID, FriendsListQueryParams queryParams)

@@ -1,7 +1,10 @@
-﻿namespace Domain.Common
+﻿using Domain.Models;
+
+namespace Domain.Common
 {
     public interface IEntity
     {
         long Id { get; set; }
+
     }
 }

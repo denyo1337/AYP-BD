@@ -54,6 +54,8 @@ namespace WebAPI.Controllers
             var profile = await _mediator.Send(new GetUserSteamProfileBySteamIdOrNick(phrase));
             return profile is not null ? Ok(profile) : NotFound();
         }
+
+
         [HttpGet("friendsLists/{steamId}")]
         [SwaggerOperation(Summary = "Endpoint to return user friends list")]
         [Produces(typeof(PageResult<FriendDetailsDto>))]
@@ -62,6 +64,10 @@ namespace WebAPI.Controllers
             var result = await _mediator.Send(new GetUserFriendListsQuery(steamId, queryParams));
             return Ok(result);
         }
+
+
+
+
         [HttpGet("validate/steamId/{steamId:long}")]
         [SwaggerOperation(Summary = "validate your steamid ")]
         [Produces(typeof(SteamIdValidationResult))]
