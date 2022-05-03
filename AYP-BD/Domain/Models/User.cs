@@ -18,6 +18,7 @@ namespace Domain.Models
         public string CommunityUrl { get; set; }
         public DateTime? LastLogOn { get; set; }
         public long? SteamId { get; set; }
+        public DateTime? LastSteamIdUpdate { get; set; }
         public virtual SteamUserData SteamUserData { get; set; }
         #region domain actions
         public User Update(string email, string nickname, int? phoneNumber, string nationality)
@@ -39,14 +40,16 @@ namespace Domain.Models
             if (SteamId != steamId && steamId.HasValue)
             {
                 SteamId = steamId;
-                LastModified = DateTime.Now;
+                LastModified = DateTime.Now.Date;
                 LastModifiedBy = Email;
+                LastSteamIdUpdate = DateTime.Now.Date;
             }
             if (resetValue.HasValue && resetValue.Value)
             {
                 SteamId = null;
                 LastModified = DateTime.Now;
                 LastModifiedBy = Email;
+                LastSteamIdUpdate = DateTime.Now.Date;
             }
             return this;
         }

@@ -2,6 +2,7 @@
 using Application.DTO;
 using Application.Functions.Commands.UserCommands;
 using Application.Functions.Queries.UsersQueries;
+using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -56,12 +57,19 @@ namespace WebAPI.Controllers
         [HttpGet("friendsLists/{steamId}")]
         [SwaggerOperation(Summary = "Endpoint to return user friends list")]
         [Produces(typeof(PageResult<FriendDetailsDto>))]
-        public async Task<IActionResult> GetFriendsList([FromRoute] string steamId, [FromQuery] FriendsListQueryParams queryParams)
+        public async Task<IActionResult> GetFriendsList([FromRoute]string steamId, [FromQuery] FriendsListQueryParams queryParams)
         {
             var result = await _mediator.Send(new GetUserFriendListsQuery(steamId, queryParams));
             return Ok(result);
         }
-   
+        [HttpGet("validate/steamId/{steamId:long}")]
+        [SwaggerOperation(Summary = "validate your steamid ")]
+        [Produces(typeof(SteamIdValidationResult))]
+        public async Task<IActionResult> ValidateSteamId([FromRoute]long steamId)
+        {
+            return Ok(await _mediator.Send(new IsSteamIdValidQuery(steamId)));
+        }
+
 
     }
 }

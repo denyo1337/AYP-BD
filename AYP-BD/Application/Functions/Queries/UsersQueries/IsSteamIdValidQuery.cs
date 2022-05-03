@@ -1,11 +1,12 @@
 ﻿using Application.DTO;
 using Application.Interfaces;
 using Domain.Data.Interfaces;
+using Domain.Enums;
 using MediatR;
 
 namespace Application.Functions.Queries.UsersQueries
 {
-    public class IsSteamIdValidQuery : IRequest<bool>
+    public class IsSteamIdValidQuery : IRequest<SteamIdValidationResult>
     {
         public long SteamId { get; set; }
 
@@ -15,7 +16,7 @@ namespace Application.Functions.Queries.UsersQueries
         }
     }
 
-    public class IsSteamIdValidQueryHandler : IRequestHandler<IsSteamIdValidQuery, bool>
+    public class IsSteamIdValidQueryHandler : IRequestHandler<IsSteamIdValidQuery, SteamIdValidationResult>
     {
         private readonly IHttpRequestHandler _httpHandler;
         private readonly IUsersRepostiory _usersRepostiory;
@@ -28,16 +29,14 @@ namespace Application.Functions.Queries.UsersQueries
             _usersRepostiory = usersRepostiory;
         }
 
-        public async Task<bool> Handle(IsSteamIdValidQuery request, CancellationToken cancellationToken)
+        public async Task<SteamIdValidationResult> Handle(IsSteamIdValidQuery request, CancellationToken cancellationToken)
         {
             var player = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamids = request.SteamId });
 
-            if (player.Model.Response.Players.Any() && !await _usersRepostiory.IsSteamIDTaken(request.SteamId, cancellationToken))
-            {
-                return true;
-            }
+            if (!player.Model.Response.Players.Any()) return SteamIdValidationResult.DoestNotExist;
+            if (await _usersRepostiory.IsSteamIDTaken(request.SteamId, cancellationToken)) return SteamIdValidationResult.SteamIDTaken;
 
-            return false;
+            return SteamIdValidationResult.Ok;
         }
     }
 }

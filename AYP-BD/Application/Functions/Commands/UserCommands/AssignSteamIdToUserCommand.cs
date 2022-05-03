@@ -1,37 +1,44 @@
 ﻿using Application.Services;
 using Domain.Data.Interfaces;
+using Domain.Enums;
 using MediatR;
 
 namespace Application.Functions.Commands.UserCommands
 {
-    public class AssignSteamIdToUserCommand : IRequest<bool>
+    public class AssignSteamIdToUserCommand : IRequest<SteamIdValidationResult>
     {
         public long? SteamId { get; set; }
         public bool? ResetValue { get; set; } = false;
 
     }
-    public class AssignSteamToUserCommandHanlder : IRequestHandler<AssignSteamIdToUserCommand, bool>
+    public class AssignSteamToUserCommandHanlder : IRequestHandler<AssignSteamIdToUserCommand, SteamIdValidationResult>
     {
         private readonly IUserContextService _userContext;
         private readonly IUsersRepostiory _usersRepostiory;
-
+        private const int MinDaysToUpdate = 7;
         public AssignSteamToUserCommandHanlder(IUserContextService userContext, IUsersRepostiory usersRepostiory)
         {
             _userContext = userContext;
             _usersRepostiory = usersRepostiory;
         }
 
-        public async Task<bool> Handle(AssignSteamIdToUserCommand request, CancellationToken cancellationToken)
+        public async Task<SteamIdValidationResult> Handle(AssignSteamIdToUserCommand request, CancellationToken cancellationToken)
         {
             var userId = _userContext.GetUserId;
 
             var user = await _usersRepostiory.GetAsync(userId!.Value, cancellationToken);
+
             if (user == null)
-                return false;
+                return SteamIdValidationResult.DoestNotExist;
+            if (user.LastSteamIdUpdate.HasValue &&
+                user.LastSteamIdUpdate.Value.AddDays(MinDaysToUpdate).Date >= DateTime.Now.Date)
+                return SteamIdValidationResult.ErrorOnPeriod;
 
             user.UpdateSteamId(request.SteamId, request.ResetValue);
 
-            return await _usersRepostiory.SaveChangesAsync(cancellationToken); ;
+            var isSaved = await _usersRepostiory.SaveChangesAsync(cancellationToken);
+
+            return isSaved ? SteamIdValidationResult.Ok : SteamIdValidationResult.Error;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Application.DTO;
 using Application.Functions.Commands.UserCommands;
 using Application.Functions.Queries.UsersQueries;
+using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,11 +41,11 @@ namespace WebAPI.Controllers
 
         [HttpPut("setSteamId")]
         [SwaggerOperation(Summary = "Update steamId for user account")]
-        [Produces(typeof(bool))]
+        [Produces(typeof(SteamIdValidationResult))]
         public async Task<IActionResult> AssignSteamIdToUser([FromBody] AssignSteamIdToUserCommand command)
         {
             var result = await _mediator.Send(command);
-            return result ? Ok(result) : BadRequest();
+            return Ok(result);
         }
         [HttpPut("updateSteamData")]
         [SwaggerOperation(Summary = "Update steamUserDetails")]
