@@ -7,7 +7,7 @@ namespace Infrastructure.Validators
     public class FriendsListQueryParamsValidator : AbstractValidator<FriendsListQueryParams>
     {
         private int[] allowedPageSizes = new[] { 10, 25, 50, 100 };
-        private string[] allowedSortByColumnNames = { nameof(FriendDetailsDto.NickName), nameof(FriendDetailsDto.IsOnline), nameof(FriendDetailsDto.TimeCreated)};
+        private string[] allowedSortByColumnNames = { nameof(FriendDetailsDto.NickName).ToLower(), nameof(FriendDetailsDto.IsOnline).ToLower(), nameof(FriendDetailsDto.TimeCreated).ToLower()};
 
         public FriendsListQueryParamsValidator()
         {

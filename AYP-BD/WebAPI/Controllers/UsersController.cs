@@ -46,10 +46,10 @@ namespace WebAPI.Controllers
         {
             return Ok(await _mediator.Send(new IsNickNameTakenQuery(nickName)));
         }
-        [HttpGet("searchPlayer/{phrase}")]
+        [HttpGet("searchPlayer")]
         [SwaggerOperation(Summary = "Get user by  name specified in url or profile name")]
         [Produces(typeof(PlayerDto))]
-        public async Task<IActionResult> GetUserByNameOrSteamId([FromRoute] string phrase)
+        public async Task<IActionResult> GetUserByNameOrSteamId([FromQuery] string phrase)
         {
             var profile = await _mediator.Send(new GetUserSteamProfileBySteamIdOrNick(phrase));
             return profile is not null ? Ok(profile) : NotFound();

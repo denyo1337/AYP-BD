@@ -64,7 +64,8 @@ namespace Application.Functions.Queries.UsersQueries
                         NickName = x.SteamNickName,
                         ProfileUrl = x.ProfileUrl,
                         RealName = x.RealName,
-                        TimeCreated = x.AccountCreated.UnixTimeStampToDateTime()
+                        TimeCreated = x.AccountCreated.UnixTimeStampToDateTime(),
+                        Communityvisibilitystate = x.Communityvisibilitystate,
                     }));
                 }
             }

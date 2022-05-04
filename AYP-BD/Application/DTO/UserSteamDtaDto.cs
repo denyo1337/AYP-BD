@@ -28,6 +28,9 @@ namespace Application.DTO
         public string SteamId { get; set; }
         [JsonProperty("personastate")]
         public int IsOnline { get; set; }
+        [JsonProperty("communityvisibilitystate")]
+        public int Communityvisibilitystate { get; set; }
+
         public Player()
         {
 

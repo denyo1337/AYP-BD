@@ -17,5 +17,7 @@ namespace Application.DTO
         public DateTime TimeCreated { get; set; }
         [JsonProperty("loccountrycode")]
         public string Loccountrycode { get; set; }
+        [JsonProperty("communityvisibilitystate")]
+        public int Communityvisibilitystate { get; set; }
     }
 }
