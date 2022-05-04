@@ -47,9 +47,10 @@ namespace Application.Functions.Queries.UsersQueries
             var names = _configuration["StatsNames"].ToString().Split(",");
             if(resp.StatusCode != StatusCodes.Status200OK || resp.Model is null) return null;
 
-            var data = resp.Model.PlayerStats.Stats.Where(x => names.Contains(x.Name)).ToDictionary(x => x.Name, x => x.Value);
+            var data = resp.Model.PlayerStats.Stats.Where(x => names.Contains(x.Name)).ToList();
 
             return new(data);
+
         }
     }
 }

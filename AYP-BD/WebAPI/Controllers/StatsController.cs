@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetUserStats(string steamId)
         {
             var stats = await _mediator.Send(new GetUserStatsQuery(steamId));
-            return stats is not null ? Ok() : BadRequest();
+            return stats is not null ? Ok(stats) : BadRequest();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Application.DTO
         [JsonProperty("realname")]
         public string RealName { get; set; }
         [JsonProperty("timecreated")]
-        public DateTime? AccountCreated { get; set; }
+        public string? AccountCreated { get; set; }
         [JsonProperty("loccountrycode")]
         public string SteamNationality { get; set; }
         [JsonProperty("steamid")]

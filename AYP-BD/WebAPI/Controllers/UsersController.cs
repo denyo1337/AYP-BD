@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         {
             _mediator = mediator;
         }
-
+        
         [HttpPost("register")]
         [SwaggerOperation(Summary = "Register user, no steam profile info needed")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)

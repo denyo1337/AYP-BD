@@ -3,7 +3,7 @@ using Application.DTO;
 using Application.Interfaces;
 using Domain.Enums;
 using MediatR;
-
+using System.Globalization;
 
 namespace Application.Functions.Queries.UsersQueries
 {
@@ -41,7 +41,7 @@ namespace Application.Functions.Queries.UsersQueries
 
                 return user.Model.Response.Players.Select(x => new PlayerDto
                 {
-                    AccountCreated = x.AccountCreated.UnixTimeStampToDateTime(),
+                    AccountCreated = x.AccountCreated.UnixTimeStampToDateTime().ToString("g", CultureInfo.GetCultureInfo("de-DE")),
                     AvatarfullUrl = x.AvatarfullUrl,
                     IsOnline = x.IsOnline == 1,
                     ProfileUrl = x.ProfileUrl,
@@ -68,7 +68,7 @@ namespace Application.Functions.Queries.UsersQueries
                     {
                         return user.Model.Response.Players.Select(x => new PlayerDto
                         {
-                            AccountCreated = x.AccountCreated.UnixTimeStampToDateTime(),
+                            AccountCreated = x.AccountCreated.UnixTimeStampToDateTime().ToString("g", CultureInfo.GetCultureInfo("de-DE")),
                             AvatarfullUrl = x.AvatarfullUrl,
                             IsOnline = x.IsOnline == 1,
                             ProfileUrl = x.ProfileUrl,
