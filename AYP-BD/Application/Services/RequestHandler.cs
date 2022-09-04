@@ -10,11 +10,12 @@ namespace Application.Services
     {
         private const string BASEURL = "https://api.steampowered.com/";
         private readonly IConfiguration _configuration;
-        private string privateWebApiKey;
+        private readonly string privateWebApiKey;
         public RequestHandler(IConfiguration configuration)
         {
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(IConfiguration));
-            privateWebApiKey = _configuration["SteamApiKey"]?.ToString();
+            _configuration = configuration
+                             ?? throw new ArgumentNullException(nameof(IConfiguration));
+            privateWebApiKey = _configuration["SteamApiKey"];
         }
 
         public async Task<Response<T>> Get<T>(string path, object queryParams = null)

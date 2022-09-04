@@ -20,7 +20,6 @@ namespace WebAPI.Controllers
         {
             _mediator = mediator;
         }
-
         [HttpPost("register")]
         [SwaggerOperation(Summary = "Register user, no steam profile info needed")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserCommand command)
@@ -54,8 +53,6 @@ namespace WebAPI.Controllers
             var profile = await _mediator.Send(new GetUserSteamProfileBySteamIdOrNick(phrase));
             return profile is not null ? Ok(profile) : NotFound();
         }
-
-
         [HttpGet("friendsLists/{steamId}")]
         [SwaggerOperation(Summary = "Endpoint to return user friends list")]
         [Produces(typeof(PageResult<FriendDetailsDto>))]
@@ -64,10 +61,6 @@ namespace WebAPI.Controllers
             var result = await _mediator.Send(new GetUserFriendListsQuery(steamId, queryParams));
             return Ok(result);
         }
-
-
-
-
         [HttpGet("validate/steamId/{steamId:long}")]
         [SwaggerOperation(Summary = "validate your steamid ")]
         [Produces(typeof(SteamIdValidationResult))]
@@ -75,7 +68,5 @@ namespace WebAPI.Controllers
         {
             return Ok(await _mediator.Send(new IsSteamIdValidQuery(steamId)));
         }
-
-
     }
 }

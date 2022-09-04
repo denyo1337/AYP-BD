@@ -28,34 +28,34 @@ namespace Infrastructure.Data.Repositories
         {
             return _context.Users
                     .Include(x => x.SteamUserData)
-                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public Task<User> GetAccountDetailsWithSteamUserData(long id, CancellationToken cancellationToken)
         {
             return _context.Users
-                .Include(x => x.SteamUserData)
-                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+                    .Include(x => x.SteamUserData)
+                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public Task<User> GetUser(string email, CancellationToken cancellationToken)
         {
             return _context.Users
-                .Include(u => u.Role)
-                .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+                    .Include(u => u.Role)
+                    .FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
         }
 
         public Task<bool> IsEmailTaken(string email, CancellationToken cancellationToken)
         {
-            return _context.Users.AnyAsync(x => x.Email == email, cancellationToken: cancellationToken);
+            return _context.Users.AnyAsync(x => x.Email == email, cancellationToken);
         }
         public Task<bool> IsEmailTaken(string email, long userId, CancellationToken cancellationToken)
         {
-            return _context.Users.AnyAsync(x => x.Email == email && x.Id != userId, cancellationToken: cancellationToken);
+            return _context.Users.AnyAsync(x => x.Email == email && x.Id != userId, cancellationToken);
         }
         public Task<bool> IsSteamIDTaken(long steamid, CancellationToken cancellationToken)
         {
-            return _context.Users.AnyAsync(x => x.SteamId == steamid, cancellationToken: cancellationToken);
+            return _context.Users.AnyAsync(x => x.SteamId == steamid, cancellationToken);
         }
         public Task<bool> IsNickNameTaken(string nickname, CancellationToken cancellationToken)
         {
