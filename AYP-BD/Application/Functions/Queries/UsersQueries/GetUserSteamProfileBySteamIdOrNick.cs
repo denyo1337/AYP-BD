@@ -30,9 +30,9 @@ namespace Application.Functions.Queries.UsersQueries
         public async Task<PlayerDto> Handle(GetUserSteamProfileBySteamIdOrNick request, CancellationToken cancellationToken)
         {
 
-            if(string.IsNullOrEmpty(request.Phrase)) return null;
+            if (string.IsNullOrEmpty(request.Phrase)) return null;
 
-            if(long.TryParse(request.Phrase, out long steamId))
+            if (long.TryParse(request.Phrase, out long steamId))
             {
                 var user = await _httpHandler.Get<UserSteamDtaDto>(USERDATA_PATH, new
                 {
@@ -58,7 +58,7 @@ namespace Application.Functions.Queries.UsersQueries
                     vanityurl = request.Phrase,
                     url_type = i
                 });
-                if(result.StatusCode == 200 && result.Model.Response.Success == (int)GetUserResponseTypes.Success)
+                if (result.StatusCode == 200 && result.Model.Response.Success == (int)GetUserResponseTypes.Success)
                 {
                     var user = await _httpHandler.Get<UserSteamDtaDto>(USERDATA_PATH, new
                     {

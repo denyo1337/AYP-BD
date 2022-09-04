@@ -27,7 +27,7 @@ namespace Application.Functions.Queries.UsersQueries
         {
             if (_userContext?.GetUserId is not null && _userContext.GetUserId.HasValue)
             {
-                return await _usersRepostiory.IsEmailTaken(request.Email,_userContext.GetUserId.Value , cancellationToken);
+                return await _usersRepostiory.IsEmailTaken(request.Email, _userContext.GetUserId.Value, cancellationToken);
             }
             else
             {

@@ -3,17 +3,12 @@ using Application.Services;
 using Domain.Models;
 using FluentValidation;
 using Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Validators
 {
     public class UpdateAccountDetailsCommandValidator : AbstractValidator<UpdateAccountDetailsCommand>
     {
-        
+
         public UpdateAccountDetailsCommandValidator(AypDbContext _dbContext, IUserContextService _userContext)
         {
             RuleFor(x => x.Email).NotEmpty().EmailAddress();

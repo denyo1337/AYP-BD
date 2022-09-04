@@ -1,9 +1,4 @@
 ﻿using Application.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.DTO
 {
@@ -33,7 +28,7 @@ namespace Application.DTO
            StatsName.TotalUMP45Kills,
            StatsName.TotalMP9Kills,
            StatsName.TotalBIZONKills,
-        }; 
+        };
         private readonly string[] HeavyGunsNames = new string[]
         {
            StatsName.TotalMAG7Kills,
@@ -67,7 +62,7 @@ namespace Application.DTO
         public long BombsDefused { get; set; }
         public StatsDto(Dictionary<string, long> stats)
         {
-         
+
         }
         public StatsDto(List<Stats> stats)
         {
@@ -99,7 +94,7 @@ namespace Application.DTO
                 Value = x.Value,
             }).ToList();
             KnifeKills = stats.GetLongValue(StatsName.TotalKnifeKills);
-            RealTimeGamePlayed = CalcRealHoursSpentInGame( stats.GetLongValue(StatsName.TotalTimePlayer));
+            RealTimeGamePlayed = CalcRealHoursSpentInGame(stats.GetLongValue(StatsName.TotalTimePlayer));
             BombsPlanted = stats.GetLongValue(StatsName.TotalBombsPlanted);
             BombsDefused = stats.GetLongValue(StatsName.TotalBombsDefused);
         }
@@ -121,16 +116,16 @@ namespace Application.DTO
     public class Rifles : BaseModel
     {
 
-    } 
+    }
     public class Snipers : BaseModel
     {
-    } 
+    }
     public class Smgs : BaseModel
     {
-    } 
+    }
     public class HeavyGuns : BaseModel
     {
-    } 
+    }
     public class Pistols : BaseModel
     {
     }

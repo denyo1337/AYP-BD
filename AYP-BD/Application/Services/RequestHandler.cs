@@ -8,7 +8,7 @@ namespace Application.Services
 
     public class RequestHandler : IHttpRequestHandler
     {
-        private readonly string BASEURL = "https://api.steampowered.com/";
+        private const string BASEURL = "https://api.steampowered.com/";
         private readonly IConfiguration _configuration;
         private string privateWebApiKey;
         public RequestHandler(IConfiguration configuration)

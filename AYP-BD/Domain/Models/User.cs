@@ -21,7 +21,7 @@ namespace Domain.Models
         public DateTime? LastSteamIdUpdate { get; set; }
         public virtual SteamUserData SteamUserData { get; set; }
         #region domain actions
-       
+
         public User Update(string email, string nickname, int? phoneNumber, string nationality)
         {
             if (!string.IsNullOrEmpty(email))

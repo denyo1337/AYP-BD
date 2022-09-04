@@ -1,5 +1,4 @@
-﻿using Application.Common;
-using Application.DTO;
+﻿using Application.DTO;
 using Application.Functions.Commands.UserCommands;
 using Application.Functions.Queries.UsersQueries;
 using Domain.Enums;
@@ -25,6 +24,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         [SwaggerOperation(Summary = "Get the user account dto")]
         [Produces(typeof(AccountDetailsDto))]
+        [Authorize]
         public async Task<IActionResult> GetAccountDetails()
         {
             return Ok(await _mediator.Send(new GetUserDetailsQuery()));
@@ -56,6 +56,6 @@ namespace WebAPI.Controllers
 
             return Ok(result);
         }
-      
+
     }
 }

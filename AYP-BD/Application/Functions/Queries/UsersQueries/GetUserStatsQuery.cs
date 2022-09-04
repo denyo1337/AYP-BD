@@ -1,14 +1,8 @@
-﻿using Application.Common;
-using Application.DTO;
+﻿using Application.DTO;
 using Application.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Functions.Queries.UsersQueries
 {
@@ -45,7 +39,7 @@ namespace Application.Functions.Queries.UsersQueries
             });
 
             var names = _configuration["StatsNames"].ToString().Split(",");
-            if(resp.StatusCode != StatusCodes.Status200OK || resp.Model is null) return null;
+            if (resp.StatusCode != StatusCodes.Status200OK || resp.Model is null) return null;
 
             var data = resp.Model.PlayerStats.Stats.Where(x => names.Contains(x.Name)).ToList();
 

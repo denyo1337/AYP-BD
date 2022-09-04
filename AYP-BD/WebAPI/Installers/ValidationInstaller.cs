@@ -1,6 +1,5 @@
 ﻿using Application.Common;
 using Application.Functions.Commands.UserCommands;
-using Application.Functions.Queries.UsersQueries;
 using FluentValidation;
 using Infrastructure.Validators;
 

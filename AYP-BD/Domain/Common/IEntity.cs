@@ -1,6 +1,4 @@
-﻿using Domain.Models;
-
-namespace Domain.Common
+﻿namespace Domain.Common
 {
     public interface IEntity
     {

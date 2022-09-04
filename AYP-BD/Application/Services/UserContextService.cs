@@ -25,6 +25,6 @@ namespace Application.Services
         ClaimsPrincipal User { get; }
         long? GetUserId { get; }
         string GetUserNickName { get; }
-        long ? GetUserSteamId { get; }
+        long? GetUserSteamId { get; }
     }
 }

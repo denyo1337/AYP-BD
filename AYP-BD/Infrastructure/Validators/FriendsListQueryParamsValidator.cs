@@ -1,17 +1,16 @@
 ﻿using Application.Common;
 using Application.DTO;
-using Application.Functions.Queries.UsersQueries;
 using FluentValidation;
 namespace Infrastructure.Validators
 {
     public class FriendsListQueryParamsValidator : AbstractValidator<FriendsListQueryParams>
     {
         private int[] allowedPageSizes = new[] { 10, 25, 50, 100 };
-        private string[] allowedSortByColumnNames = { nameof(FriendDetailsDto.NickName).ToLower(), nameof(FriendDetailsDto.IsOnline).ToLower(), nameof(FriendDetailsDto.TimeCreated).ToLower()};
+        private string[] allowedSortByColumnNames = { nameof(FriendDetailsDto.NickName).ToLower(), nameof(FriendDetailsDto.IsOnline).ToLower(), nameof(FriendDetailsDto.TimeCreated).ToLower() };
 
         public FriendsListQueryParamsValidator()
         {
-            
+
             RuleFor(x => x.PageNumber)
                 .GreaterThanOrEqualTo(1);
 

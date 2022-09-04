@@ -1,5 +1,4 @@
 ﻿using Application.DTO;
-using Application.Interfaces;
 using Application.Services;
 using Domain.Data.Interfaces;
 using Domain.Models;
@@ -39,10 +38,10 @@ namespace Application.Functions.Commands.UserCommands
 
             if (result == PasswordVerificationResult.Failed)
                 return null;
-        
+
             user.Update(request.Email, request.NickName, request.PhoneNumber, request.Nationality);
 
-            var isChanged =  await _usersRepostiory.SaveChangesAsync(cancellationToken);
+            var isChanged = await _usersRepostiory.SaveChangesAsync(cancellationToken);
 
             return isChanged ? new(user) : null;
         }
