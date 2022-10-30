@@ -47,13 +47,13 @@ namespace WebAPI.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
         [HttpPut("updateSteamData")]
         [SwaggerOperation(Summary = "Update steamUserDetails")]
         [Produces(typeof(bool))]
         public async Task<IActionResult> UpdateSteamUserDetails()
         {
             var result = await _mediator.Send(new UpdateUserSteamDetailsCommand());
-
             return Ok(result);
         }
     }

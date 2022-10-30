@@ -28,11 +28,9 @@ namespace Application.Functions.Queries.UsersQueries
             _httpHandler = httpHandler;
             _usersRepostiory = usersRepostiory;
         }
-
         public async Task<SteamIdValidationResult> Handle(IsSteamIdValidQuery request, CancellationToken cancellationToken)
         {
-            var player = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamids = request.SteamId });
-
+            var player = await _httpHandler.Get<UserSteamDataDto>(USER_DETAILS_PATH, new { steamids = request.SteamId });
             if (!player.Model.Response.Players.Any()) return SteamIdValidationResult.DoestNotExist;
             if (await _usersRepostiory.IsSteamIDTaken(request.SteamId, cancellationToken)) return SteamIdValidationResult.SteamIDTaken;
 

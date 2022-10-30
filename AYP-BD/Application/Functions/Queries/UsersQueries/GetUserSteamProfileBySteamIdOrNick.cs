@@ -3,6 +3,7 @@ using Application.DTO;
 using Application.Interfaces;
 using Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System.Globalization;
 
 namespace Application.Functions.Queries.UsersQueries
@@ -29,17 +30,15 @@ namespace Application.Functions.Queries.UsersQueries
 
         public async Task<PlayerDto> Handle(GetUserSteamProfileBySteamIdOrNick request, CancellationToken cancellationToken)
         {
-
             if (string.IsNullOrEmpty(request.Phrase)) return null;
 
             if (long.TryParse(request.Phrase, out long steamId))
             {
-                var user = await _httpHandler.Get<UserSteamDtaDto>(USERDATA_PATH, new
+                var user = await _httpHandler.Get<UserSteamDataDto>(USERDATA_PATH, new
                 {
                     steamids = steamId
                 });
-
-                return user.Model.Response.Players.Select(x => new PlayerDto
+                return user.Model.Response.Players?.Select(x => new PlayerDto
                 {
                     AccountCreated = x.AccountCreated.UnixTimeStampToDateTime().ToString("g", CultureInfo.GetCultureInfo("de-DE")),
                     AvatarfullUrl = x.AvatarfullUrl,
@@ -53,35 +52,36 @@ namespace Application.Functions.Queries.UsersQueries
             }
             for (int i = 1; i < VanityUrlTypesLimit; i++)
             {
-                var result = await _httpHandler.Get<GetUserSteamIdDto>(VANITY_USER_PATH, new
+                Response<GetUserSteamIdDto> result = await GetUserIdWithSpecificVanityId(request, i);
+                if (result.StatusCode == StatusCodes.Status200OK && result.Model.Response.Success == (int)GetUserResponseTypes.Success)
                 {
-                    vanityurl = request.Phrase,
-                    url_type = i
-                });
-                if (result.StatusCode == 200 && result.Model.Response.Success == (int)GetUserResponseTypes.Success)
-                {
-                    var user = await _httpHandler.Get<UserSteamDtaDto>(USERDATA_PATH, new
+                    var user = await _httpHandler.Get<UserSteamDataDto>(USERDATA_PATH, new
                     {
                         steamids = result.Model.Response.SteamId
                     });
-                    if (user.Model.Response.Players.Any())
+                    return user.Model.Response?.Players?.Select(x => new PlayerDto
                     {
-                        return user.Model.Response.Players.Select(x => new PlayerDto
-                        {
-                            AccountCreated = x.AccountCreated.UnixTimeStampToDateTime().ToString("g", CultureInfo.GetCultureInfo("de-DE")),
-                            AvatarfullUrl = x.AvatarfullUrl,
-                            IsOnline = x.IsOnline == 1,
-                            ProfileUrl = x.ProfileUrl,
-                            RealName = x.RealName,
-                            SteamId = x.SteamId,
-                            SteamNationality = x.SteamNationality,
-                            SteamNickName = x.SteamNickName,
-                        }).FirstOrDefault();
-                    }
+                        AccountCreated = x.AccountCreated.UnixTimeStampToDateTime()
+                                .ToString("g", CultureInfo.GetCultureInfo("de-DE")),
+                        AvatarfullUrl = x.AvatarfullUrl,
+                        IsOnline = x.IsOnline == 1,
+                        ProfileUrl = x.ProfileUrl,
+                        RealName = x.RealName,
+                        SteamId = x.SteamId,
+                        SteamNationality = x.SteamNationality,
+                        SteamNickName = x.SteamNickName,
+                    }).FirstOrDefault();
                 }
             }
-
             return null;
+        }
+        private async Task<Response<GetUserSteamIdDto>> GetUserIdWithSpecificVanityId(GetUserSteamProfileBySteamIdOrNick request, int vanityId)
+        {
+            return await _httpHandler.Get<GetUserSteamIdDto>(VANITY_USER_PATH, new
+            {
+                vanityurl = request.Phrase,
+                url_type = vanityId
+            });
         }
     }
 }

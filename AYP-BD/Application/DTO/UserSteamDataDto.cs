@@ -2,7 +2,7 @@
 
 namespace Application.DTO
 {
-    public class UserSteamDtaDto
+    public class UserSteamDataDto
     {
         public Response Response { get; set; }
     }

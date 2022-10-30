@@ -23,11 +23,9 @@ namespace Application.Functions.Queries.UsersQueries
             _usersRepostiory = usersRepostiory;
             _userContext = userContext;
         }
-
         public async Task<bool> Handle(IsNickNameTakenQuery request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.NickName)) return true;
-
             return await _usersRepostiory.IsNickNameTaken(request.NickName, cancellationToken);
         }
     }

@@ -20,13 +20,8 @@ namespace Application.Functions.Queries.UsersQueries
         public async Task<AccountDetailsDto> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
         {
             var userId = _userContext.GetUserId;
-            if (userId == null)
-            {
-                return null;
-            }
-
+            if (userId == null) return null;
             var user = await _usersRepostiory.GetAccountDetails((long)userId, cancellationToken);
-
             return user is null ? null : new(user);
         }
     }

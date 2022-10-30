@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="89275af4-9d9b-4fd3-b7c2-5fd00455e86d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Application/DTO/StatsDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/DTO/StatsDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/DTO/UserSteamDtaDto.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/AssignSteamIdToUserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/AssignSteamIdToUserCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/SignInUserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/SignInUserCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/UpdateAccountDetailsCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/UpdateAccountDetailsCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/UpdateUserSteamDetailsCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Commands/UserCommands/UpdateUserSteamDetailsCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserDetailsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserDetailsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserFriendListsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserFriendListsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserStatsQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserStatsQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserSteamProfileBySteamIdOrNick.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/GetUserSteamProfileBySteamIdOrNick.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/IsEmailTakenQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/IsEmailTakenQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/IsNickNameTakenQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/IsNickNameTakenQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/IsSteamIdValidQuery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Functions/Queries/UsersQueries/IsSteamIdValidQuery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/UsersFriendListService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/UsersFriendListService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebAPI/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebAPI/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebAPI/Program.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2GrdyDhBDP6KizOSgORC93SJ1Dp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <created>1667150891242</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1667150891242</updated>
+      <workItem from="1667150893336" duration="6000" />
+    </task>
+    <servers />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

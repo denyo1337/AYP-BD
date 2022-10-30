@@ -32,14 +32,25 @@ namespace Application.Functions.Commands.UserCommands
         public async Task<SignInResultDto> Handle(SignInUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _usersRepostiory.GetUser(request.Email, cancellationToken);
+
             if (user == null)
                 return new(LoginVerificationResult.WrongPassword);
             if (user.IsBanned.HasValue && user.IsBanned.Value)
                 return new(LoginVerificationResult.UserBanned);
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+
+            PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
             if (result == PasswordVerificationResult.Failed)
                 return new(LoginVerificationResult.WrongPassword);
 
+            List<Claim> claims = PrepareClaimsForUserDependedOnCurrentSteamIdValue(user);
+            JwtSecurityToken token = CreateJwtTokenWithClaims(claims);
+            user.UpdateLastLogOn();
+            await _usersRepostiory.SaveChangesAsync(cancellationToken);
+            return new(WriteToken(token), LoginVerificationResult.Succes);
+        }
+
+        private static List<Claim> PrepareClaimsForUserDependedOnCurrentSteamIdValue(User user)
+        {
             List<Claim> claims = new()
             {
                 new Claim(AybClaims.UserId, user.Id.ToString()),
@@ -51,6 +62,11 @@ namespace Application.Functions.Commands.UserCommands
             {
                 claims.Add(new Claim(AybClaims.SteamId, user.SteamId.ToString()));
             }
+            return claims;
+        }
+
+        private JwtSecurityToken CreateJwtTokenWithClaims(List<Claim> claims)
+        {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
@@ -60,12 +76,12 @@ namespace Application.Functions.Commands.UserCommands
               claims,
               expires: expires,
               signingCredentials: cred);
+            return token;
+        }
+        private string WriteToken(JwtSecurityToken src)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
-            user.LastLogOn = DateTime.Now;
-
-            await _usersRepostiory.SaveChangesAsync(cancellationToken);
-
-            return new(tokenHandler.WriteToken(token), LoginVerificationResult.Succes);
+            return tokenHandler.WriteToken(src);
         }
     }
 }

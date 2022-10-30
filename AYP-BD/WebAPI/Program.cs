@@ -5,7 +5,6 @@ using WebAPI.Installers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.InstallServicesAssembly(builder.Configuration);
 var authSettings = new AuthenticationSettings();
@@ -29,7 +28,6 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -47,7 +45,6 @@ app.UseCors(opt =>
     opt.AllowAnyHeader();
 });
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();

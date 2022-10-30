@@ -31,13 +31,11 @@ namespace Application.Functions.Commands.UserCommands
         {
             var user = await _usersRepostiory.GetAccountDetails((long)_userContext.GetUserId, cancellationToken);
 
-            if (user == null)
-                return null;
+            if (user == null) return null;
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
 
-            if (result == PasswordVerificationResult.Failed)
-                return null;
+            if (result == PasswordVerificationResult.Failed) return null;
 
             user.Update(request.Email, request.NickName, request.PhoneNumber, request.Nationality);
 

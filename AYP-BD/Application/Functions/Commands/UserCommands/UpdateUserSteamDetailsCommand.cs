@@ -11,7 +11,6 @@ namespace Application.Functions.Commands.UserCommands
 {
     public class UpdateUserSteamDetailsCommand : IRequest<bool>
     {
-
     }
 }
 public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSteamDetailsCommand, bool>
@@ -28,7 +27,6 @@ public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSt
         _httpHandler = httpHandler;
         _entityGenerator = entityGenerator;
     }
-
     public async Task<bool> Handle(UpdateUserSteamDetailsCommand request, CancellationToken cancellationToken)
     {
         var userId = _userContext.GetUserId;
@@ -36,7 +34,7 @@ public class UpdateUserSteamDetailsCommandHandler : IRequestHandler<UpdateUserSt
         var user = await _usersRepostiory.GetAccountDetailsWithSteamUserData(userId.Value, cancellationToken);
         if (user == null || !user.SteamId.HasValue) return false;
 
-        var userSteamData = await _httpHandler.Get<UserSteamDtaDto>(USER_DETAILS_PATH, new { steamIds = user.SteamId.Value });
+        var userSteamData = await _httpHandler.Get<UserSteamDataDto>(USER_DETAILS_PATH, new { steamIds = user.SteamId.Value });
 
         if (userSteamData.StatusCode != StatusCodes.Status200OK) return false;
 

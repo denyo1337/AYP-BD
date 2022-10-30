@@ -35,7 +35,10 @@ namespace Domain.Models
 
             return this;
         }
-
+        public void UpdateLastLogOn()
+        {
+            LastLogOn = DateTime.Now;
+        }
         public User UpdateSteamId(long? steamId, bool? resetValue = false)
         {
             if (SteamId != steamId && steamId.HasValue)

@@ -34,7 +34,8 @@ namespace Application.Functions.Queries.UsersQueries
                 return new PageResult<FriendDetailsDto>(null, 0, request.QueryParams.PageSize, request.QueryParams.PageNumber);
             }
 
-            SortCollection(ref userFriendList, request.QueryParams.SortBy, request.QueryParams.SortDirection);
+            SortCollection(ref userFriendList,
+                request.QueryParams.SortBy ?? nameof(FriendDetailsDto.NickName), request.QueryParams.SortDirection);
 
             PaginateResult(ref userFriendList, request.QueryParams.PageSize, request.QueryParams.PageNumber);
 
@@ -64,8 +65,8 @@ namespace Application.Functions.Queries.UsersQueries
                     var selectedColumn = columnsSelectors[sortbyLowered];
 
                     source = sortDirection == SortDirection.ASC ?
-                        source.AsQueryable().OrderBy(selectedColumn).ToList()
-                        : source.AsQueryable().OrderByDescending(selectedColumn).ToList();
+                            source.AsQueryable().OrderBy(selectedColumn).ToList()
+                            : source.AsQueryable().OrderByDescending(selectedColumn).ToList();
                 }
             }
             else

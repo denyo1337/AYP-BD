@@ -11,7 +11,6 @@ namespace Application.Functions.Queries.UsersQueries
         {
             Email = email;
         }
-
     }
     public class IsEmailTakenQueryHandler : IRequestHandler<IsEmailTakenQuery, bool>
     {
@@ -25,14 +24,10 @@ namespace Application.Functions.Queries.UsersQueries
         }
         public async Task<bool> Handle(IsEmailTakenQuery request, CancellationToken cancellationToken)
         {
-            if (_userContext?.GetUserId is not null && _userContext.GetUserId.HasValue)
-            {
+            if (_userContext.GetUserId.HasValue)
                 return await _usersRepostiory.IsEmailTaken(request.Email, _userContext.GetUserId.Value, cancellationToken);
-            }
             else
-            {
                 return await _usersRepostiory.IsEmailTaken(request.Email, cancellationToken);
-            }
         }
     }
 }

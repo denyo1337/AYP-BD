@@ -33,7 +33,7 @@ namespace Application.Services
                 for (int i = 0; i < friendsSteamIds.Count; i += 100)
                 {
 
-                    var getFriendsSummaries = await _httpHandler.Get<UserSteamDtaDto>(STEAM_PLAYERSSUMMARIES_PATH, new
+                    var getFriendsSummaries = await _httpHandler.Get<UserSteamDataDto>(STEAM_PLAYERSSUMMARIES_PATH, new
                     {
                         steamids = string.Join(",", friendsSteamIds.Skip(i).Take(100))
                     });

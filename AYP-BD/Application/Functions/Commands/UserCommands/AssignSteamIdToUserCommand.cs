@@ -1,6 +1,7 @@
 ﻿using Application.Services;
 using Domain.Data.Interfaces;
 using Domain.Enums;
+using Domain.Models;
 using MediatR;
 
 namespace Application.Functions.Commands.UserCommands
@@ -25,20 +26,20 @@ namespace Application.Functions.Commands.UserCommands
         public async Task<SteamIdValidationResult> Handle(AssignSteamIdToUserCommand request, CancellationToken cancellationToken)
         {
             var userId = _userContext.GetUserId;
-
             var user = await _usersRepostiory.GetAsync(userId!.Value, cancellationToken);
-
             if (user == null)
                 return SteamIdValidationResult.DoestNotExist;
-            if (user.LastSteamIdUpdate.HasValue &&
-                user.LastSteamIdUpdate.Value.AddDays(MinDaysToUpdate).Date >= DateTime.Now.Date)
+            if (CheckIfPeriodIsInvalid(user))
                 return SteamIdValidationResult.ErrorOnPeriod;
 
             user.UpdateSteamId(request.SteamId, request.ResetValue);
-
             var isSaved = await _usersRepostiory.SaveChangesAsync(cancellationToken);
-
             return isSaved ? SteamIdValidationResult.Ok : SteamIdValidationResult.Error;
+        }
+        private static bool CheckIfPeriodIsInvalid(User user)
+        {
+            return user.LastSteamIdUpdate.HasValue &&
+                user.LastSteamIdUpdate.Value.AddDays(MinDaysToUpdate).Date >= DateTime.Now.Date;
         }
     }
 }
