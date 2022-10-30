@@ -55,7 +55,7 @@ namespace Application.Functions.Commands.UserCommands
             {
                 new Claim(AybClaims.UserId, user.Id.ToString()),
                 new Claim(AybClaims.EmailAddress, user.Email),
-                new Claim(AybClaims.NickName, user.NickName),
+                new Claim(AybClaims.NickName, string.IsNullOrEmpty(user.NickName) ?user.Email : user.NickName),
                 new Claim(AybClaims.Role, user.Role.Name),
             };
             if (user.SteamId.HasValue)
