@@ -20,6 +20,7 @@ namespace Application
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IHttpRequestHandler, RequestHandler>();
             services.AddScoped<IUsersFriendListService, UsersFriendListService>();
+            services.AddScoped<IUsersServiceValidator, UsersServiceValidator>();
 
             //here register MiddleWare for error handling
             //passwordhashers, contextProvider, mediator, services etc.

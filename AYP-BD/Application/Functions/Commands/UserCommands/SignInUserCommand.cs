@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Application.DTO;
+using Application.Services;
 using Domain.Data.Interfaces;
 using Domain.Enums;
 using Domain.Models;
@@ -19,33 +20,28 @@ namespace Application.Functions.Commands.UserCommands
     }
     public class SignInUserCommandHandler : IRequestHandler<SignInUserCommand, SignInResultDto>
     {
-        private readonly IUsersRepostiory _usersRepostiory;
-        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
-
-        public SignInUserCommandHandler(IUsersRepostiory usersRepostiory, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        private readonly IUsersRepostiory _usersRepostiory;
+        private readonly IUsersServiceValidator _userServiceDataValidator;
+        public SignInUserCommandHandler(IUsersRepostiory usersRepostiory, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings, IUsersServiceValidator userServiceDataValidator)
         {
             _usersRepostiory = usersRepostiory;
-            _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
+            _userServiceDataValidator = userServiceDataValidator;
         }
         public async Task<SignInResultDto> Handle(SignInUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _usersRepostiory.GetUser(request.Email, cancellationToken);
+            var verificationResult = _userServiceDataValidator.ValidateUserDataAndPassword(user, request.Password);
 
-            if (user == null)
-                return new(LoginVerificationResult.WrongPassword);
-            if (user.IsBanned.HasValue && user.IsBanned.Value)
-                return new(LoginVerificationResult.UserBanned);
-
-            PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
-            if (result == PasswordVerificationResult.Failed)
-                return new(LoginVerificationResult.WrongPassword);
-
+            if (verificationResult != LoginVerificationResult.Succes) return new(verificationResult);
+          
             List<Claim> claims = PrepareClaimsForUserDependedOnCurrentSteamIdValue(user);
             JwtSecurityToken token = CreateJwtTokenWithClaims(claims);
+
             user.UpdateLastLogOn();
             await _usersRepostiory.SaveChangesAsync(cancellationToken);
+
             return new(WriteToken(token), LoginVerificationResult.Succes);
         }
 
@@ -55,7 +51,7 @@ namespace Application.Functions.Commands.UserCommands
             {
                 new Claim(AybClaims.UserId, user.Id.ToString()),
                 new Claim(AybClaims.EmailAddress, user.Email),
-                new Claim(AybClaims.NickName, string.IsNullOrEmpty(user.NickName) ?user.Email : user.NickName),
+                new Claim(AybClaims.NickName, string.IsNullOrEmpty(user.NickName) ? user.Email : user.NickName),
                 new Claim(AybClaims.Role, user.Role.Name),
             };
             if (user.SteamId.HasValue)
@@ -76,6 +72,7 @@ namespace Application.Functions.Commands.UserCommands
               claims,
               expires: expires,
               signingCredentials: cred);
+
             return token;
         }
         private string WriteToken(JwtSecurityToken src)
