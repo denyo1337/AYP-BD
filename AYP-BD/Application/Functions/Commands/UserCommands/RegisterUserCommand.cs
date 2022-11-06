@@ -32,19 +32,10 @@ namespace Application.Functions.Commands.UserCommands
         }
         public async Task<bool> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User()
-            {
-                Id = _entityGenerator.Generate(),
-                Email = request.Email,
-                NickName = request.NickName,
-                Nationality = request.Natonality,
-                Created = DateTime.Now,
-                IsActive = true,
-                IsBanned = false,
-                LastModified = DateTime.Now,
-                RoleId = (byte)AccountTypes.User,
-                Gender = request.Gender,
-            };
+
+            var user = User.CreateUser(_entityGenerator.Generate(),
+                request.Email, request.NickName, request.Natonality, request.Gender);
+
             var passwordHash = _passwordHasher.HashPassword(user, request.Password);
             user.PasswordHash = passwordHash;
 

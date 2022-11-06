@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Enums;
 
 namespace Domain.Models
 {
@@ -22,13 +23,28 @@ namespace Domain.Models
         public virtual SteamUserData SteamUserData { get; set; }
         #region domain actions
 
+        public static User CreateUser(long userId, string email, string nickName, string nationality, string gender)
+        {
+            return new User()
+            {
+                Id = userId,
+                Email = email,
+                NickName = nickName,
+                Nationality = nationality,
+                Created = DateTime.Now,
+                IsActive = true,
+                IsBanned = false,
+                LastModified = DateTime.Now,
+                RoleId = (byte)AccountTypes.User,
+                Gender = gender,
+            };
+        }
         public User Update(string email, string nickname, int? phoneNumber, string nationality)
         {
             if (!string.IsNullOrEmpty(email))
                 Email = email;
             if (!string.IsNullOrEmpty(nickname))
                 NickName = nickname;
-
 
             PhoneNumber = phoneNumber;
             Nationality = nationality;

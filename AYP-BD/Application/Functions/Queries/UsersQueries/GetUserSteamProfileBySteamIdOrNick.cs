@@ -38,7 +38,7 @@ namespace Application.Functions.Queries.UsersQueries
                 {
                     steamids = steamId
                 });
-                return user.Model.Response.Players?.Select(x => new PlayerDto
+                var mappedUser = user.Model.Response.Players?.Select(x => new PlayerDto
                 {
                     AccountCreated = x.AccountCreated.UnixTimeStampToDateTime().ToString("g", CultureInfo.GetCultureInfo("de-DE")),
                     AvatarfullUrl = x.AvatarfullUrl,
@@ -49,6 +49,8 @@ namespace Application.Functions.Queries.UsersQueries
                     SteamNationality = x.SteamNationality,
                     SteamNickName = x.SteamNickName,
                 }).FirstOrDefault();
+                if (mappedUser != null)
+                    return mappedUser;
             }
             for (int i = 1; i < VanityUrlTypesLimit; i++)
             {
@@ -73,7 +75,7 @@ namespace Application.Functions.Queries.UsersQueries
                     }).FirstOrDefault();
                 }
             }
-            return null;
+            return new();
         }
         private async Task<Response<GetUserSteamIdDto>> GetUserIdWithSpecificVanityId(GetUserSteamProfileBySteamIdOrNick request, int vanityId)
         {

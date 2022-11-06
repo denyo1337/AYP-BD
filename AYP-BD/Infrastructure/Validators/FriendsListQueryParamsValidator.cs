@@ -23,7 +23,7 @@ namespace Infrastructure.Validators
                     }
                 });
             RuleFor(x => x.SortBy)
-                .Must(value => string.IsNullOrEmpty(value) || allowedSortByColumnNames.Contains(value))
+                .Must(value => string.IsNullOrEmpty(value) || allowedSortByColumnNames.Contains(value.ToLower()))
                 .WithMessage($"SortBy jest opcjonalne lub musi zawierać wartości  {string.Join(",", allowedSortByColumnNames)}");
         }
     }
