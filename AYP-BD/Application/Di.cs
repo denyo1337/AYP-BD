@@ -15,7 +15,7 @@ namespace Application
             services.AddSingleton<IEntityGenerator, IdGeneratorWrapper>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IUserContextService, UserContextService>();
             services.AddScoped<IHttpRequestHandler, RequestHandler>();

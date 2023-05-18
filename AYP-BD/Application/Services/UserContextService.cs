@@ -1,4 +1,5 @@
 ﻿using Application.Common;
+using Application.Extensions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
@@ -15,9 +16,9 @@ namespace Application.Services
         public ClaimsPrincipal User => _httpContextAccessor.HttpContext?.User;
         public string GetUserNickName => User.Claims.Count() is 0 ? null : User.FindFirst(c => c.Type == AybClaims.NickName).Value;
 
-        public long? GetUserId => User.Claims.Count() is 0 ? null : long.Parse(User.FindFirst(c => c.Type == AybClaims.UserId).Value);
+        public long? GetUserId => User.Claims.Count() is 0 ? null : User.FindFirst(c => c.Type == AybClaims.UserId).Value.Parse<long>();
 
-        public long? GetUserSteamId => User.Claims.Count() is 0 ? null : long.Parse(User.FindFirst(c => c.Type == AybClaims.SteamId).Value);
+        public long? GetUserSteamId => User.Claims.Count() is 0 ? null : User.FindFirst(c => c.Type == AybClaims.SteamId).Value.Parse<long>();
     }
 
     public interface IUserContextService
